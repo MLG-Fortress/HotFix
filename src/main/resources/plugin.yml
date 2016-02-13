@@ -4,3 +4,13 @@ version: ${project.version}
 author: RoboMWM
 main: me.robomwm.HotFix.Main
 depend: [ProjectKorra]
+commands:
+   hotfix:
+      description: no
+      usage: /hotfix <target> <name>
+      permission: hotfix.no
+      permission-message: Ayyy leMayo
+permissions:
+    hotfix.no:
+        description: Permission to /hotfix
+        default: op
