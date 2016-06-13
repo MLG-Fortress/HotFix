@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTeleportEvent;
@@ -25,20 +27,32 @@ public class Main extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(this, this);
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+    @EventHandler
+    void herp(BlockPistonExtendEvent event)
     {
-        if (cmd.getName().equalsIgnoreCase("hotfix"))
-        {
-            if (args.length < 2)
-                return false;
-
-            Player player = Bukkit.getPlayer(args[0]);
-            player.setPlayerListName(args[1]);
-            return true;
-        }
-        return false;
+        System.out.println("ayy");
     }
+
+    @EventHandler
+    void derp(BlockPistonRetractEvent event)
+    {
+        System.out.println("lemayo");
+    }
+
+//    @Override
+//    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+//    {
+//        if (cmd.getName().equalsIgnoreCase("hotfix"))
+//        {
+//            if (args.length < 2)
+//                return false;
+//
+//            Player player = Bukkit.getPlayer(args[0]);
+//            player.setPlayerListName(args[1]);
+//            return true;
+//        }
+//        return false;
+//    }
 
     // ProjectKorra hotfix: This code cancels Explosions from other plugins
     // https://github.com/ProjectKorra/ProjectKorra/issues/400
@@ -57,12 +71,12 @@ public class Main extends JavaPlugin implements Listener
 //        }
 //    }
 
-    @EventHandler
-    public void onEntityTeleport(EntityTeleportEvent event)
-    {
-        Bukkit.broadcastMessage("loud noises");
-        Entity entity = event.getEntity();
-        World world = entity.getWorld();
-        Bukkit.broadcastMessage(entity.getType().toString() + world.getName());
-    }
+//    @EventHandler
+//    public void onEntityTeleport(EntityTeleportEvent event)
+//    {
+//        Bukkit.broadcastMessage("loud noises");
+//        Entity entity = event.getEntity();
+//        World world = entity.getWorld();
+//        Bukkit.broadcastMessage(entity.getType().toString() + world.getName());
+//    }
 }
