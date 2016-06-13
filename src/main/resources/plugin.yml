@@ -3,7 +3,6 @@ version: ${project.version}
 #website:
 author: RoboMWM
 main: me.robomwm.HotFix.Main
-depend: [ProjectKorra]
 commands:
    hotfix:
       description: no
