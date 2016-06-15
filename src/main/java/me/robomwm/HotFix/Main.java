@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTeleportEvent;
@@ -26,33 +27,28 @@ public class Main extends JavaPlugin implements Listener
     {
         getServer().getPluginManager().registerEvents(this, this);
     }
-
+    boolean herp = false;
     @EventHandler
-    void herp(BlockPistonExtendEvent event)
+    void derp(EntityChangeBlockEvent event)
     {
-        System.out.println("ayy");
+        if (herp)
+            event.setCancelled(true);
     }
 
-    @EventHandler
-    void derp(BlockPistonRetractEvent event)
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        System.out.println("lemayo");
+        if (cmd.getName().equalsIgnoreCase("hotfix"))
+        {
+            if (herp)
+                herp = false;
+            else
+                herp = true;
+            sender.sendMessage(String.valueOf(herp));
+            return true;
+        }
+        return false;
     }
-
-//    @Override
-//    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
-//    {
-//        if (cmd.getName().equalsIgnoreCase("hotfix"))
-//        {
-//            if (args.length < 2)
-//                return false;
-//
-//            Player player = Bukkit.getPlayer(args[0]);
-//            player.setPlayerListName(args[1]);
-//            return true;
-//        }
-//        return false;
-//    }
 
     // ProjectKorra hotfix: This code cancels Explosions from other plugins
     // https://github.com/ProjectKorra/ProjectKorra/issues/400
