@@ -1,6 +1,7 @@
 package me.robomwm.HotFix;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -20,6 +21,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -38,6 +40,10 @@ public class Main extends JavaPlugin implements Listener
     {
         if (herp)
         {
+            if(event.getTo() == Material.AIR)
+            {
+                return;
+            }
             FallingBlock entity = (FallingBlock)event.getEntity();
             Block block = event.getBlock();
             event.setCancelled(true);
