@@ -16,7 +16,6 @@ import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -30,10 +29,10 @@ public class Main extends JavaPlugin implements Listener
     }
     boolean herp = false;
     @EventHandler
-    void derp(PlayerMoveEvent event)
+    void derp(EntityChangeBlockEvent event)
     {
         if (herp)
-            Bukkit.broadcastMessage(event.getPlayer().getLocation().getBlock().getType().toString());
+            event.setCancelled(true);
     }
 
     @Override
