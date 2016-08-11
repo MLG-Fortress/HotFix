@@ -2,9 +2,12 @@ package me.robomwm.HotFix;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,7 +19,9 @@ import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 /**
  * Created by Robo on 2/12/2016.
@@ -32,7 +37,16 @@ public class Main extends JavaPlugin implements Listener
     void derp(EntityChangeBlockEvent event)
     {
         if (herp)
+        {
+            FallingBlock entity = (FallingBlock)event.getEntity();
+            Block block = event.getBlock();
             event.setCancelled(true);
+            @SuppressWarnings("deprecation")
+            ItemStack itemStack = new ItemStack(entity.getMaterial(), 1, entity.getBlockData());
+            Item item = block.getWorld().dropItem(entity.getLocation(), itemStack);
+            item.setVelocity(new Vector());
+        }
+
     }
 
     @Override
