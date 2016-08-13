@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -55,6 +56,16 @@ public class Main extends JavaPlugin implements Listener
             item.setVelocity(new Vector());
         }
 
+    }
+
+    @EventHandler
+    void blerp(PlayerMoveEvent event)
+    {
+        if (herp)
+        {
+            Material block = event.getPlayer().getLocation().getBlock().getType();
+            Bukkit.broadcastMessage(block.toString() + " " + block.isSolid() + block.isTransparent() + block.isOccluding());
+        }
     }
 
     @Override
