@@ -46,7 +46,8 @@ public class Main extends JavaPlugin implements Listener
             }
             FallingBlock entity = (FallingBlock)event.getEntity();
             Block block = event.getBlock();
-            Bukkit.broadcastMessage(event.getTo().toString() + block.getType().toString());
+            Bukkit.broadcastMessage(String.valueOf(event.getEntity().getMetadata("me") != null));
+            Bukkit.broadcastMessage(String.valueOf(event.getEntity().getMetadata("we").isEmpty()));
             event.setCancelled(true);
             @SuppressWarnings("deprecation")
             ItemStack itemStack = new ItemStack(entity.getMaterial(), 1, entity.getBlockData());
