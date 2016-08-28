@@ -18,6 +18,7 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -36,7 +37,16 @@ public class Main extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(this, this);
     }
     boolean herp = false;
-    @EventHandler
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    void blep(EntityExplodeEvent event)
+    {
+        if (!herp)
+            return;
+        Bukkit.broadcastMessage(String.valueOf(event.blockList().size()));
+        Bukkit.broadcastMessage(String.valueOf(event.getYield()));
+    }
+    //@EventHandler
     void derp(EntityChangeBlockEvent event)
     {
         if (herp)
@@ -58,7 +68,7 @@ public class Main extends JavaPlugin implements Listener
 
     }
 
-    @EventHandler
+    //@EventHandler
     void blerp(PlayerMoveEvent event)
     {
         if (herp)
