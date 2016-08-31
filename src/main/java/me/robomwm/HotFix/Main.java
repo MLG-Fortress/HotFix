@@ -87,7 +87,9 @@ public class Main extends JavaPlugin implements Listener
                 herp = false;
             else
                 herp = true;
+            Player player = (Player)sender;
             sender.sendMessage(String.valueOf(herp));
+            sender.sendMessage(String.valueOf(player.isSleepingIgnored()));
             return true;
         }
         return false;
