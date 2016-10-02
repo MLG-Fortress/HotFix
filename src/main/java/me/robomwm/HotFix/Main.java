@@ -2,6 +2,7 @@ package me.robomwm.HotFix;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -23,6 +24,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+
+import java.util.UUID;
 
 /**
  * Created by Robo on 2/12/2016.
@@ -94,6 +97,14 @@ public class Main extends JavaPlugin implements Listener
             Player player = (Player)sender;
             sender.sendMessage(String.valueOf(herp));
             sender.sendMessage(String.valueOf(player.isSleepingIgnored()));
+            if (args.length > 0)
+            {
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(args[0]));
+                sender.sendMessage(offlinePlayer.toString());
+                sender.sendMessage(offlinePlayer.getUniqueId().toString());
+                sender.sendMessage(offlinePlayer.getName());
+            }
+
             return true;
         }
         return false;
