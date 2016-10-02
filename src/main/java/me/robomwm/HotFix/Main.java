@@ -97,12 +97,22 @@ public class Main extends JavaPlugin implements Listener
             Player player = (Player)sender;
             sender.sendMessage(String.valueOf(herp));
             sender.sendMessage(String.valueOf(player.isSleepingIgnored()));
-            if (args.length > 0)
+            if (args.length > 1)
             {
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(args[0]));
-                sender.sendMessage(offlinePlayer.toString());
-                sender.sendMessage(offlinePlayer.getUniqueId().toString());
-                sender.sendMessage(offlinePlayer.getName());
+                if (args[0].equalsIgnoreCase("uuid"))
+                {
+                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(args[1]));
+                    sender.sendMessage(offlinePlayer.toString());
+                    sender.sendMessage(offlinePlayer.getUniqueId().toString());
+                    sender.sendMessage(offlinePlayer.getName());
+                }
+                else if (args[0].equalsIgnoreCase("name"))
+                {
+                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+                    sender.sendMessage(offlinePlayer.toString());
+                    sender.sendMessage(offlinePlayer.getUniqueId().toString());
+                    sender.sendMessage(offlinePlayer.getName());
+                }
             }
 
             return true;
