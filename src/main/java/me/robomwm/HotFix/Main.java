@@ -30,36 +30,27 @@ import java.util.UUID;
 /**
  * Created by Robo on 2/12/2016.
  */
-public class Main extends JavaPlugin implements Listener
-{
-    public void onEnable()
-    {
+public class Main extends JavaPlugin implements Listener {
+    public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
     }
     boolean herp = false;
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    void onEntityDerp(EntityDamageByEntityEvent event)
-    {
-        if (!herp)
-            return;
+    void onEntityDerp(EntityDamageByEntityEvent event) {
+        if (!herp) return;
         Bukkit.broadcastMessage(event.getEntityType().toString() + " Damages for " + String.valueOf(event.getFinalDamage()));
     }
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    void blep(EntityExplodeEvent event)
-    {
-        if (!herp)
-            return;
+    void blep(EntityExplodeEvent event){
+        if (!herp) return;
         Bukkit.broadcastMessage(String.valueOf(event.blockList().size()));
         Bukkit.broadcastMessage(String.valueOf(event.getYield()));
     }
     //@EventHandler
-    void derp(EntityChangeBlockEvent event)
-    {
-        if (herp)
-        {
-            if(event.getTo() == Material.AIR)
-            {
+    void derp(EntityChangeBlockEvent event) {
+        if (herp) {
+            if(event.getTo() == Material.AIR){
                 return;
             }
             FallingBlock entity = (FallingBlock)event.getEntity();
@@ -76,20 +67,16 @@ public class Main extends JavaPlugin implements Listener
     }
 
     //@EventHandler
-    void blerp(PlayerMoveEvent event)
-    {
-        if (herp)
-        {
+    void blerp(PlayerMoveEvent event){
+        if (herp){
             Material block = event.getPlayer().getLocation().getBlock().getType();
             Bukkit.broadcastMessage(block.toString() + " " + block.isSolid() + block.isTransparent() + block.isOccluding());
         }
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
-    {
-        if (cmd.getName().equalsIgnoreCase("hotfix"))
-        {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+        if (cmd.getName().equalsIgnoreCase("hotfix")){
             if (herp)
                 herp = false;
             else
@@ -97,17 +84,13 @@ public class Main extends JavaPlugin implements Listener
             Player player = (Player)sender;
             sender.sendMessage(String.valueOf(herp));
             sender.sendMessage(String.valueOf(player.isSleepingIgnored()));
-            if (args.length > 1)
-            {
-                if (args[0].equalsIgnoreCase("uuid"))
-                {
+            if (args.length > 1){
+                if (args[0].equalsIgnoreCase("uuid")){
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(args[1]));
                     sender.sendMessage(offlinePlayer.toString());
                     sender.sendMessage(offlinePlayer.getUniqueId().toString());
                     sender.sendMessage(offlinePlayer.getName());
-                }
-                else if (args[0].equalsIgnoreCase("name"))
-                {
+                }else if (args[0].equalsIgnoreCase("name"){
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
                     sender.sendMessage(offlinePlayer.toString());
                     sender.sendMessage(offlinePlayer.getUniqueId().toString());
