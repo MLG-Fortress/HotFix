@@ -89,26 +89,28 @@ public class Main extends JavaPlugin implements Listener {
             return;
         if (event.getEntityType() != EntityType.PLAYER)
             return;
-        final Player player = (Player)event.getEntity();
-        cancelVelocity.add(player);
-        Bukkit.broadcastMessage(String.valueOf(i));
-        new BukkitRunnable()
+        if (schedule)
         {
-            public void run()
+            final Player player = (Player)event.getEntity();
+            cancelVelocity.add(player);
+            Bukkit.broadcastMessage(String.valueOf(i));
+            new BukkitRunnable()
             {
-                cancelVelocity.remove(player);
-                Bukkit.broadcastMessage(String.valueOf(i));
-                i++;
+                public void run()
+                {
+                    cancelVelocity.remove(player);
+                    i++;
+                    Bukkit.broadcastMessage(String.valueOf(i));
+                }
+            }.runTaskLater(this, 1L);
+            return;
+        }
+        final Vector vector = new Vector(0, 0, 0);
+        new BukkitRunnable() {
+            public void run() {
+                event.getEntity().setVelocity(vector);
             }
         }.runTaskLater(this, 1L);
-        //final Vector vector = new Vector(0, 0, 0);
-         //   event.getEntity().setVelocity(vector);
-
-//        new BukkitRunnable() {
-//            public void run() {
-//                event.getEntity().setVelocity(vector);
-//            }
-//        }.runTaskLater(this, 1L);
 
     }
 
