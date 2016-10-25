@@ -23,6 +23,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.UUID;
@@ -37,6 +38,7 @@ public class Main extends JavaPlugin implements Listener
         getServer().getPluginManager().registerEvents(this, this);
     }
     boolean herp = false;
+    boolean schedule = false;
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     void onEntityDerp(EntityDamageByEntityEvent event)
@@ -85,6 +87,27 @@ public class Main extends JavaPlugin implements Listener
         }
     }
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    void onDamageEvent(final EntityDamageEvent event)
+    {
+        if (!herp)
+            return;
+        final Vector vector = new Vector(0, 0, 0);
+        if (!schedule)
+            event.getEntity().setVelocity(vector);
+        else
+        {
+            new BukkitRunnable()
+            {
+                public void run()
+                {
+                    event.getEntity().setVelocity(vector);
+                }
+            }.runTaskLater(this, 1L);
+        }
+
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
@@ -112,6 +135,14 @@ public class Main extends JavaPlugin implements Listener
                     sender.sendMessage(offlinePlayer.toString());
                     sender.sendMessage(offlinePlayer.getUniqueId().toString());
                     sender.sendMessage(offlinePlayer.getName());
+                }
+                else if (args[0].equalsIgnoreCase("schedule"))
+                {
+                    if (schedule)
+                        schedule = false;
+                    else
+                        schedule = true;
+                    sender.sendMessage("Schedule: " + String.valueOf(schedule));
                 }
             }
 
