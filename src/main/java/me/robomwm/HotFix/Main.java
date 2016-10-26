@@ -160,6 +160,10 @@ public class Main extends JavaPlugin implements Listener {
                     sender.sendMessage(offlinePlayer.getUniqueId().toString());
                     sender.sendMessage(offlinePlayer.getName());
                 }
+                else if (args[0].equalsIgnoreCase("attack"))
+                {
+                    Bukkit.getPlayerExact(args[1]).damage(0.5D, (Player)sender);
+                }
                 else if (args[0].equalsIgnoreCase("schedule"))
                 {
                     if (schedule)
