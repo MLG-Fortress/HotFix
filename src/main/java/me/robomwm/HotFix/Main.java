@@ -127,7 +127,7 @@ public class Main extends JavaPlugin implements Listener {
     {
         if (!herp)
             return;
-        if (cancelVelocity.remove(event.getPlayer()))
+        if (schedule)
             event.setCancelled(true);
         Bukkit.broadcastMessage(String.valueOf(i) + " velocity fired");
     }
