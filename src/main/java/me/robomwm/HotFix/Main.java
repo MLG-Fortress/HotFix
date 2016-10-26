@@ -90,36 +90,37 @@ public class Main extends JavaPlugin implements Listener {
             return;
         Bukkit.broadcastMessage(event.getCause().toString() + String.valueOf(event.isCancelled()));
     }
-    //@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    void onDamageEvent(final EntityDamageEvent event) {
-        if (!herp)
-            return;
-        if (event.getEntityType() != EntityType.PLAYER)
-            return;
-        if (schedule)
-        {
-            final Player player = (Player)event.getEntity();
-            cancelVelocity.add(player);
-            Bukkit.broadcastMessage(String.valueOf(i));
-            new BukkitRunnable()
-            {
-                public void run()
-                {
-                    cancelVelocity.remove(player);
-                    i++;
-                    Bukkit.broadcastMessage(String.valueOf(i));
-                }
-            }.runTaskLater(this, 1L);
-            return;
-        }
-        final Vector vector = new Vector(0, 0, 0);
-        new BukkitRunnable() {
-            public void run() {
-                event.getEntity().setVelocity(vector);
-            }
-        }.runTaskLater(this, 1L);
 
-    }
+    //@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+//    void onDamageEvent(final EntityDamageEvent event) {
+//        if (!herp)
+//            return;
+//        if (event.getEntityType() != EntityType.PLAYER)
+//            return;
+//        if (schedule)
+//        {
+//            final Player player = (Player)event.getEntity();
+//            cancelVelocity.add(player);
+//            Bukkit.broadcastMessage(String.valueOf(i));
+//            new BukkitRunnable()
+//            {
+//                public void run()
+//                {
+//                    cancelVelocity.remove(player);
+//                    i++;
+//                    Bukkit.broadcastMessage(String.valueOf(i));
+//                }
+//            }.runTaskLater(this, 1L);
+//            return;
+//        }
+//        final Vector vector = new Vector(0, 0, 0);
+//        new BukkitRunnable() {
+//            public void run() {
+//                event.getEntity().setVelocity(vector);
+//            }
+//        }.runTaskLater(this, 1L);
+//
+//    }
 
     @EventHandler
     void velocityEvent(PlayerVelocityEvent event)
