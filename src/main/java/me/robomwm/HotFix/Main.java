@@ -83,7 +83,14 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
+    void entitydamagebyentity(EntityDamageByEntityEvent event)
+    {
+        if (!herp)
+            return;
+        Bukkit.broadcastMessage(event.getCause().toString() + String.valueOf(event.isCancelled()));
+    }
+    //@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     void onDamageEvent(final EntityDamageEvent event) {
         if (!herp)
             return;
