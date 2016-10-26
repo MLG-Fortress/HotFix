@@ -132,6 +132,12 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(String.valueOf(i) + " velocity fired");
     }
 
+    @EventHandler(priority = EventPriority.HIGH)
+    void death(PlayerDeathEvent event)
+    {
+        event.setDeathMessage(null);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
