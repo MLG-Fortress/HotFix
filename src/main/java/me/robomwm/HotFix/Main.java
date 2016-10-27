@@ -97,7 +97,7 @@ public class Main extends JavaPlugin implements Listener {
     {
         if (!herp)
             return;
-        Bukkit.broadcastMessage(event.getCause().toString() + String.valueOf(event.isCancelled()));
+        Bukkit.broadcastMessage(String.valueOf(i) + event.getCause().toString() + String.valueOf(event.isCancelled()));
     }
 
     //@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
