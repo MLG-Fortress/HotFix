@@ -32,14 +32,23 @@ import java.util.UUID;
  * Created by Robo on 2/12/2016.
  */
 public class Main extends JavaPlugin implements Listener {
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(this, this);
-    }
-
     boolean herp = false;
     boolean schedule = false;
     Set<Player> cancelVelocity = new HashSet<Player>();
     int i = 0;
+
+    public void onEnable() {
+        getServer().getPluginManager().registerEvents(this, this);
+        new BukkitRunnable()
+        {
+            public void run()
+            {
+                i++;
+            }
+        }.runTaskTimer(this, 1L, 1L);
+    }
+
+
 
     //@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     void onEntityDerp(EntityDamageByEntityEvent event) {
@@ -129,7 +138,7 @@ public class Main extends JavaPlugin implements Listener {
             return;
         if (schedule)
             event.setCancelled(true);
-        Bukkit.broadcastMessage(String.valueOf(i) + " velocity fired");
+        Bukkit.broadcastMessage(String.valueOf(i) + " velocity fired " + String.valueOf(event.isCancelled()));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
