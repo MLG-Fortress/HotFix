@@ -193,9 +193,9 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     ItemStack itemStack = player.getInventory().getItemInMainHand();
                     ItemMeta itemMeta = itemStack.getItemMeta();
-                    String name = "";
-                    for (int i = 1; i < args.length; i++)
-                        name = name + args[i];
+                    String name = args[1];
+                    for (int i = 2; i < args.length; i++)
+                        name = name + " " + args[i];
                     name = ChatColor.translateAlternateColorCodes('&', name);
                     itemMeta.setDisplayName(name);
                     itemStack.setItemMeta(itemMeta);
