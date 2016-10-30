@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -186,6 +187,15 @@ public class Main extends JavaPlugin implements Listener {
                     else
                         schedule = true;
                     sender.sendMessage("Schedule: " + String.valueOf(schedule));
+                }
+                else if (args[0].equalsIgnoreCase("rename"))
+                {
+                    ItemStack itemStack = player.getInventory().getItemInMainHand();
+                    ItemMeta itemMeta = itemStack.getItemMeta();
+                    String name = "";
+                    for (int i = 1; i < args.length; i++)
+                        name = name + args[i];
+                    itemMeta.setDisplayName(name);
                 }
             }
 
