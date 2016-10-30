@@ -1,6 +1,7 @@
 package me.robomwm.HotFix;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -195,6 +196,7 @@ public class Main extends JavaPlugin implements Listener {
                     String name = "";
                     for (int i = 1; i < args.length; i++)
                         name = name + args[i];
+                    name = ChatColor.translateAlternateColorCodes('&', name);
                     itemMeta.setDisplayName(name);
                     itemStack.setItemMeta(itemMeta);
                 }
