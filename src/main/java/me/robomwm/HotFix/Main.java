@@ -196,6 +196,7 @@ public class Main extends JavaPlugin implements Listener {
                     for (int i = 1; i < args.length; i++)
                         name = name + args[i];
                     itemMeta.setDisplayName(name);
+                    itemStack.setItemMeta(itemMeta);
                 }
             }
 
