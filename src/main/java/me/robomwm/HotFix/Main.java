@@ -154,15 +154,18 @@ public class Main extends JavaPlugin implements Listener {
     {
         if (cmd.getName().equalsIgnoreCase("hotfix"))
         {
-            if (herp)
-                herp = false;
-            else
-                herp = true;
-            Player player = (Player)sender;
-            sender.sendMessage(String.valueOf(herp));
-            sender.sendMessage(String.valueOf(player.isSleepingIgnored()));
-            if (args.length > 1)
+            if (args.length < 1)
             {
+                if (herp)
+                    herp = false;
+                else
+                    herp = true;
+                sender.sendMessage(String.valueOf(herp));
+            }
+            else if (args.length > 1)
+            {
+                Player player = (Player)sender;
+
                 if (args[0].equalsIgnoreCase("uuid"))
                 {
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(args[1]));
@@ -199,6 +202,13 @@ public class Main extends JavaPlugin implements Listener {
                     name = ChatColor.translateAlternateColorCodes('&', name);
                     itemMeta.setDisplayName(name);
                     itemStack.setItemMeta(itemMeta);
+                }
+                else if (args[0].equalsIgnoreCase("dura")) //durability
+                {
+                    ItemStack itemStack = player.getInventory().getItemInMainHand();
+                    if (itemStack == null) return false;
+                    sender.sendMessage(String.valueOf(itemStack.getDurability()));
+                    sender.sendMessage(String.valueOf(itemStack.getType().getMaxDurability()));
                 }
             }
 
