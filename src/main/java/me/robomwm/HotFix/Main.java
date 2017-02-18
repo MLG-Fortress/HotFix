@@ -37,72 +37,64 @@ public class Main extends JavaPlugin implements Listener {
     boolean herp = false;
     boolean schedule = false;
     Set<Player> cancelVelocity = new HashSet<Player>();
-    int i = 0;
 
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        new BukkitRunnable()
-        {
-            public void run()
-            {
-                i++;
-            }
-        }.runTaskTimer(this, 1L, 1L);
     }
 
 
 
     //@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    void onEntityDerp(EntityDamageByEntityEvent event) {
-        if (!herp)
-            return;
-        Bukkit.broadcastMessage(event.getEntityType().toString() + " Damages for " + String.valueOf(event.getFinalDamage()));
-    }
+//    void onEntityDerp(EntityDamageByEntityEvent event) {
+//        if (!herp)
+//            return;
+//        Bukkit.broadcastMessage(event.getEntityType().toString() + " Damages for " + String.valueOf(event.getFinalDamage()));
+//    }
 
     //@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    void blep(EntityExplodeEvent event) {
-        if (!herp)
-            return;
-        Bukkit.broadcastMessage(String.valueOf(event.blockList().size()));
-        Bukkit.broadcastMessage(String.valueOf(event.getYield()));
-    }
+//    void blep(EntityExplodeEvent event) {
+//        if (!herp)
+//            return;
+//        Bukkit.broadcastMessage(String.valueOf(event.blockList().size()));
+//        Bukkit.broadcastMessage(String.valueOf(event.getYield()));
+//    }
+
+//    //@EventHandler
+//    void derp(EntityChangeBlockEvent event) {
+//        if (herp) {
+//            if (event.getTo() == Material.AIR) {
+//                return;
+//            }
+//            FallingBlock entity = (FallingBlock) event.getEntity();
+//            Block block = event.getBlock();
+//            Bukkit.broadcastMessage(String.valueOf(event.getEntity().getMetadata("me") != null));
+//            Bukkit.broadcastMessage(String.valueOf(event.getEntity().getMetadata("we").isEmpty()));
+//            event.setCancelled(true);
+//            @SuppressWarnings("deprecation")
+//            ItemStack itemStack = new ItemStack(entity.getMaterial(), 1, entity.getBlockData());
+//            Item item = block.getWorld().dropItem(entity.getLocation(), itemStack);
+//            item.setVelocity(new Vector());
+//        }
+//
+//    }
 
     //@EventHandler
-    void derp(EntityChangeBlockEvent event) {
-        if (herp) {
-            if (event.getTo() == Material.AIR) {
-                return;
-            }
-            FallingBlock entity = (FallingBlock) event.getEntity();
-            Block block = event.getBlock();
-            Bukkit.broadcastMessage(String.valueOf(event.getEntity().getMetadata("me") != null));
-            Bukkit.broadcastMessage(String.valueOf(event.getEntity().getMetadata("we").isEmpty()));
-            event.setCancelled(true);
-            @SuppressWarnings("deprecation")
-            ItemStack itemStack = new ItemStack(entity.getMaterial(), 1, entity.getBlockData());
-            Item item = block.getWorld().dropItem(entity.getLocation(), itemStack);
-            item.setVelocity(new Vector());
-        }
+//    void blerp(PlayerMoveEvent event) {
+//        if (herp) {
+//            Material block = event.getPlayer().getLocation().getBlock().getType();
+//            Bukkit.broadcastMessage(block.toString() + " " + block.isSolid() + block.isTransparent() + block.isOccluding());
+//        }
+//    }
 
-    }
+//    @EventHandler(priority = EventPriority.MONITOR)
+//    void entitydamagebyentity(EntityDamageByEntityEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        Bukkit.broadcastMessage(String.valueOf(i) + event.getCause().toString() + String.valueOf(event.isCancelled()));
+//    }
 
-    //@EventHandler
-    void blerp(PlayerMoveEvent event) {
-        if (herp) {
-            Material block = event.getPlayer().getLocation().getBlock().getType();
-            Bukkit.broadcastMessage(block.toString() + " " + block.isSolid() + block.isTransparent() + block.isOccluding());
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    void entitydamagebyentity(EntityDamageByEntityEvent event)
-    {
-        if (!herp)
-            return;
-        Bukkit.broadcastMessage(String.valueOf(i) + event.getCause().toString() + String.valueOf(event.isCancelled()));
-    }
-
-    //@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+//    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 //    void onDamageEvent(final EntityDamageEvent event) {
 //        if (!herp)
 //            return;
@@ -133,21 +125,15 @@ public class Main extends JavaPlugin implements Listener {
 //
 //    }
 
-    @EventHandler
-    void velocityEvent(PlayerVelocityEvent event)
-    {
-        if (!herp)
-            return;
-        if (schedule)
-            event.setCancelled(true);
-        Bukkit.broadcastMessage(String.valueOf(i) + " velocity fired " + String.valueOf(event.isCancelled()));
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    void death(PlayerDeathEvent event)
-    {
-        event.setDeathMessage(null);
-    }
+//    @EventHandler
+//    void velocityEvent(PlayerVelocityEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (schedule)
+//            event.setCancelled(true);
+//        Bukkit.broadcastMessage(String.valueOf(i) + " velocity fired " + String.valueOf(event.isCancelled()));
+//    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
@@ -172,6 +158,10 @@ public class Main extends JavaPlugin implements Listener {
                     sender.sendMessage(offlinePlayer.toString());
                     sender.sendMessage(offlinePlayer.getUniqueId().toString());
                     sender.sendMessage(offlinePlayer.getName());
+                }
+                else if (args[0].equalsIgnoreCase("bed"))
+                {
+                    player.sendMessage(player.getBedSpawnLocation().toString());
                 }
                 else if (args[0].equalsIgnoreCase("name"))
                 {
