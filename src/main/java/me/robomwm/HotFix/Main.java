@@ -135,6 +135,14 @@ public class Main extends JavaPlugin implements Listener {
 //        Bukkit.broadcastMessage(String.valueOf(i) + " velocity fired " + String.valueOf(event.isCancelled()));
 //    }
 
+    @EventHandler
+    void resurrect(EntityResurrectEvent event)
+    {
+        if (!herp)
+            return;
+        event.setCancelled(false);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
