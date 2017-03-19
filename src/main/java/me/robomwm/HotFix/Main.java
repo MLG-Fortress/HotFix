@@ -153,6 +153,8 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     void onHurt(EntityDamageEvent event)
     {
+        if (!herp)
+            return;
         if (!event.getEntity().isOp())
             return;
         //Enum#values()? What's that?
