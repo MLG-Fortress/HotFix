@@ -237,6 +237,11 @@ public class Main extends JavaPlugin implements Listener {
                     player.sendMessage(String.valueOf(player.getHealth()));
                     player.sendMessage(String.valueOf(player.getHealthScale()));
                 }
+                else if (args[0].equalsIgnoreCase("fixhealth"))
+                {
+                    Player player1 = Bukkit.getPlayer(args[1]);
+                    player1.setHealthScaled(false);
+                }
             }
 
             return true;
