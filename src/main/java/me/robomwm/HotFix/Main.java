@@ -150,6 +150,23 @@ public class Main extends JavaPlugin implements Listener {
 //            event.setKeepInventory(true);
 //    }
 
+    @EventHandler
+    void onHurt(EntityDamageEvent event)
+    {
+        if (!event.getEntity().isOp())
+            return;
+        //Enum#values()? What's that?
+        Bukkit.broadcastMessage("getDamage(): " + String.valueOf(event.getDamage()));
+        Bukkit.broadcastMessage("getFinalDamage(): " + String.valueOf(event.getFinalDamage()));
+        Bukkit.broadcastMessage("Base: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE)));
+        Bukkit.broadcastMessage("Armor: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.ARMOR)));
+        Bukkit.broadcastMessage("Absorption: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.ABSORPTION)));
+        Bukkit.broadcastMessage("Blocking: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.BLOCKING)));
+        Bukkit.broadcastMessage("Hard hat: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.HARD_HAT)));
+        Bukkit.broadcastMessage("Magic: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.MAGIC)));
+        Bukkit.broadcastMessage("Resistance: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.RESISTANCE)));
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
@@ -157,10 +174,7 @@ public class Main extends JavaPlugin implements Listener {
         {
             if (args.length < 1)
             {
-                if (herp)
-                    herp = false;
-                else
-                    herp = true;
+                herp = !herp;
                 sender.sendMessage(String.valueOf(herp));
             }
             else if (args.length > 1)
