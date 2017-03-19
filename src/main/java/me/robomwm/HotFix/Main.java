@@ -143,12 +143,12 @@ public class Main extends JavaPlugin implements Listener {
 //        event.setCancelled(false);
 //    }
 
-    @EventHandler
-    void deathlootcheck(PlayerDeathEvent event)
-    {
-        if (herp)
-            event.setKeepInventory(true);
-    }
+//    @EventHandler
+//    void deathlootcheck(PlayerDeathEvent event)
+//    {
+//        if (herp)
+//            event.setKeepInventory(true);
+//    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
@@ -214,6 +214,12 @@ public class Main extends JavaPlugin implements Listener {
                     if (itemStack == null) return false;
                     sender.sendMessage(String.valueOf(itemStack.getDurability()));
                     sender.sendMessage(String.valueOf(itemStack.getType().getMaxDurability()));
+                }
+                else if (args[0].equalsIgnoreCase("health"))
+                {
+                    player.sendMessage(String.valueOf(player.getMaxHealth()));
+                    player.sendMessage(String.valueOf(player.getHealth()));
+                    player.sendMessage(String.valueOf(player.getHealthScale()));
                 }
             }
 
