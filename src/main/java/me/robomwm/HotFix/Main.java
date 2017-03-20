@@ -161,6 +161,7 @@ public class Main extends JavaPlugin implements Listener {
             return;
 
         TNTPrimed tnt = (TNTPrimed)event.getEntity();
+        Bukkit.broadcastMessage(String.valueOf(tnt.hashCode()));
         Bukkit.broadcastMessage(tnt.getSource().toString());
     }
 
