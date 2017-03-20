@@ -152,60 +152,72 @@ public class Main extends JavaPlugin implements Listener {
 //            event.setKeepInventory(true);
 //    }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    void onHurt(EntityDamageEvent event)
+    @EventHandler
+    void onExplode(EntityExplodeEvent event)
     {
         if (!herp)
             return;
-        if (event.getEntityType() != EntityType.PLAYER)
+        if (event.getEntityType() != EntityType.PRIMED_TNT)
             return;
-        //Enum#values()? What's that?
-        Bukkit.broadcastMessage("getDamage(): " + String.valueOf(event.getDamage()));
-        Bukkit.broadcastMessage("getFinalDamage(): " + String.valueOf(event.getFinalDamage()));
-        Bukkit.broadcastMessage("Base: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE)));
-        Bukkit.broadcastMessage("Armor: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.ARMOR)));
-        Bukkit.broadcastMessage("Absorption: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.ABSORPTION)));
-        Bukkit.broadcastMessage("Blocking: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.BLOCKING)));
-        Bukkit.broadcastMessage("Hard hat: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.HARD_HAT)));
-        Bukkit.broadcastMessage("Magic: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.MAGIC)));
-        Bukkit.broadcastMessage("Resistance: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.RESISTANCE)));
+
+        TNTPrimed tnt = (TNTPrimed)event.getEntity();
+        Bukkit.broadcastMessage(tnt.getSource().toString());
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    private void onPlayerDamage(EntityDamageEvent event)
-    {
-        if (!herp)
-            return;
-        if (event.getEntityType() != EntityType.PLAYER)
-            return;
-
-        if (!event.getEntity().isOp())
-            return;
-
-        CraftPlayer player = (CraftPlayer)event.getEntity();
-
-        EntityLiving nmsPlayer = player.getHandle();
-
-        final float originalShieldHealth = nmsPlayer.getAbsorptionHearts();
-
-        if (originalShieldHealth == 0)
-            return;
-        float shieldHealth = originalShieldHealth;
-        Bukkit.broadcastMessage("shieldHealth: " + String.valueOf(originalShieldHealth));
-        double armorDamage = event.getOriginalDamage(EntityDamageEvent.DamageModifier.ARMOR);
-
-        shieldHealth += armorDamage; //armordamage is negative
-
-        if (shieldHealth < 0)
-        {
-            event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, shieldHealth);
-            event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, -originalShieldHealth);
-            return;
-        }
-
-        event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, -0.0);
-        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, event.getOriginalDamage(EntityDamageEvent.DamageModifier.ABSORPTION) + (shieldHealth - originalShieldHealth));
-    }
+//    @EventHandler(priority = EventPriority.MONITOR)
+//    void onHurt(EntityDamageEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (event.getEntityType() != EntityType.PLAYER)
+//            return;
+//        //Enum#values()? What's that?
+//        Bukkit.broadcastMessage("getDamage(): " + String.valueOf(event.getDamage()));
+//        Bukkit.broadcastMessage("getFinalDamage(): " + String.valueOf(event.getFinalDamage()));
+//        Bukkit.broadcastMessage("Base: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE)));
+//        Bukkit.broadcastMessage("Armor: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.ARMOR)));
+//        Bukkit.broadcastMessage("Absorption: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.ABSORPTION)));
+//        Bukkit.broadcastMessage("Blocking: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.BLOCKING)));
+//        Bukkit.broadcastMessage("Hard hat: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.HARD_HAT)));
+//        Bukkit.broadcastMessage("Magic: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.MAGIC)));
+//        Bukkit.broadcastMessage("Resistance: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.RESISTANCE)));
+//    }
+//
+//    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+//    private void onPlayerDamage(EntityDamageEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (event.getEntityType() != EntityType.PLAYER)
+//            return;
+//
+//        if (!event.getEntity().isOp())
+//            return;
+//
+//        CraftPlayer player = (CraftPlayer)event.getEntity();
+//
+//        EntityLiving nmsPlayer = player.getHandle();
+//
+//        final float originalShieldHealth = nmsPlayer.getAbsorptionHearts();
+//
+//        if (originalShieldHealth == 0)
+//            return;
+//        float shieldHealth = originalShieldHealth;
+//        Bukkit.broadcastMessage("shieldHealth: " + String.valueOf(originalShieldHealth));
+//        double armorDamage = event.getOriginalDamage(EntityDamageEvent.DamageModifier.ARMOR);
+//
+//        shieldHealth += armorDamage; //armordamage is negative
+//
+//        if (shieldHealth < 0)
+//        {
+//            event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, shieldHealth);
+//            event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, -originalShieldHealth);
+//            return;
+//        }
+//
+//        event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, -0.0);
+//        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, event.getOriginalDamage(EntityDamageEvent.DamageModifier.ABSORPTION) + (shieldHealth - originalShieldHealth));
+//    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
