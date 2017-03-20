@@ -185,9 +185,11 @@ public class Main extends JavaPlugin implements Listener {
         EntityLiving nmsPlayer = player.getHandle();
 
         final float originalShieldHealth = nmsPlayer.getAbsorptionHearts();
+
         if (originalShieldHealth == 0)
             return;
         float shieldHealth = originalShieldHealth;
+        Bukkit.broadcastMessage("shieldHealth: " + String.valueOf(originalShieldHealth));
         double armorDamage = event.getOriginalDamage(EntityDamageEvent.DamageModifier.ARMOR);
 
         shieldHealth += armorDamage; //armordamage is negative
@@ -195,12 +197,12 @@ public class Main extends JavaPlugin implements Listener {
         if (shieldHealth < 0)
         {
             event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, shieldHealth);
-            event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, -originalShieldHealth);
+            event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, originalShieldHealth);
             return;
         }
 
         event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, -0.0);
-        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, originalShieldHealth - shieldHealth);
+        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, event.getOriginalDamage(EntityDamageEvent.DamageModifier.ABSORPTION) + (shieldHealth - originalShieldHealth));
     }
 
     @Override
