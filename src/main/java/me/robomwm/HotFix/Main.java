@@ -157,8 +157,6 @@ public class Main extends JavaPlugin implements Listener {
     {
         if (!herp)
             return;
-        if (!event.getEntity().isOp())
-            return;
         //Enum#values()? What's that?
         Bukkit.broadcastMessage("getDamage(): " + String.valueOf(event.getDamage()));
         Bukkit.broadcastMessage("getFinalDamage(): " + String.valueOf(event.getFinalDamage()));
@@ -177,6 +175,9 @@ public class Main extends JavaPlugin implements Listener {
         if (!herp)
             return;
         if (event.getEntityType() != EntityType.PLAYER)
+            return;
+
+        if (!event.getEntity().isOp())
             return;
 
         CraftPlayer player = (CraftPlayer)event.getEntity();
