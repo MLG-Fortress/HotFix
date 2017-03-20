@@ -1,5 +1,6 @@
 package me.robomwm.HotFix;
 
+import net.minecraft.server.v1_11_R1.EntityLiving;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -150,7 +151,7 @@ public class Main extends JavaPlugin implements Listener {
 //            event.setKeepInventory(true);
 //    }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     void onHurt(EntityDamageEvent event)
     {
         if (!herp)
@@ -167,6 +168,35 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage("Hard hat: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.HARD_HAT)));
         Bukkit.broadcastMessage("Magic: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.MAGIC)));
         Bukkit.broadcastMessage("Resistance: " + String.valueOf(event.getOriginalDamage(EntityDamageEvent.DamageModifier.RESISTANCE)));
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    private void onPlayerDamage(EntityDamageEvent event)
+    {
+        if (!herp)
+            return;
+        if (event.getEntityType() != EntityType.PLAYER)
+            return;
+
+        EntityLiving nmsPlayer = (EntityLiving)event.getEntity();
+
+        final float originalShieldHealth = nmsPlayer.getAbsorptionHearts();
+        if (originalShieldHealth == 0)
+            return;
+        float shieldHealth = originalShieldHealth;
+        double armorDamage = event.getOriginalDamage(EntityDamageEvent.DamageModifier.ARMOR);
+
+        shieldHealth += armorDamage; //armordamage is negative
+
+        if (shieldHealth < 0)
+        {
+            event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, shieldHealth);
+            event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, -originalShieldHealth);
+            return;
+        }
+
+        event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, -0.0);
+        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, shieldHealth - originalShieldHealth);
     }
 
     @Override

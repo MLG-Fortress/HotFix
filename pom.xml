@@ -8,11 +8,15 @@
     <artifactId>HotFix</artifactId>
     <version>1.0</version>
     <repositories>
-        <repository>
-            <id>paper-repo</id>
-            <url>https://repo.destroystokyo.com/repository/maven-public/</url>
-        </repository>
-    </repositories>
+    <repository>
+        <id>paper-repo</id>
+        <url>https://repo.destroystokyo.com/repository/maven-public/</url>
+    </repository>
+    <repository>
+        <id>tech-repo</id>
+        <url>https://repo.techcable.net/content/groups/public/</url>
+    </repository>
+</repositories>
     <build>
         <finalName>${project.name}</finalName>
         <resources>
@@ -30,6 +34,12 @@
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.11.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
