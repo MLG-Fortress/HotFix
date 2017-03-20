@@ -199,7 +199,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, -0.0);
-        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, shieldHealth - originalShieldHealth);
+        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, originalShieldHealth - shieldHealth);
     }
 
     @Override
