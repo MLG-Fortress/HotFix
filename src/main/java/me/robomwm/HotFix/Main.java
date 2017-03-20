@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -178,7 +179,9 @@ public class Main extends JavaPlugin implements Listener {
         if (event.getEntityType() != EntityType.PLAYER)
             return;
 
-        EntityLiving nmsPlayer = (EntityLiving)event.getEntity();
+        CraftPlayer player = (CraftPlayer)event.getEntity();
+
+        EntityLiving nmsPlayer = player.getHandle();
 
         final float originalShieldHealth = nmsPlayer.getAbsorptionHearts();
         if (originalShieldHealth == 0)
