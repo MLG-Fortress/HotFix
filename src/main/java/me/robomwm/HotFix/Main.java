@@ -220,6 +220,18 @@ public class Main extends JavaPlugin implements Listener {
 //        event.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, event.getOriginalDamage(EntityDamageEvent.DamageModifier.ABSORPTION) + (shieldHealth - originalShieldHealth));
 //    }
 
+    int nodamage = 20;
+
+    @EventHandler
+    void onEntityDamage(EntityDamageEvent event)
+    {
+        if (!herp)
+            return;
+        if (!(event.getEntity() instanceof LivingEntity))
+            return;
+        ((LivingEntity)event.getEntity()).setNoDamageTicks(nodamage);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
@@ -297,6 +309,10 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     Player player1 = Bukkit.getPlayer(args[1]);
                     player1.setMaximumNoDamageTicks(Integer.parseInt(args[2]));
+                }
+                else if (args[0].equalsIgnoreCase("setnodamage"))
+                {
+                    nodamage = Integer.parseInt(args[1]);
                 }
             }
 
