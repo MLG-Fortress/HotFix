@@ -293,6 +293,11 @@ public class Main extends JavaPlugin implements Listener {
                     Player player1 = Bukkit.getPlayer(args[1]);
                     player1.setHealthScaled(false);
                 }
+                else if (args[0].equalsIgnoreCase("nodamageticks"))
+                {
+                    Player player1 = Bukkit.getPlayer(args[1]);
+                    player1.setMaximumNoDamageTicks(Integer.parseInt(args[2]));
+                }
             }
 
             return true;
