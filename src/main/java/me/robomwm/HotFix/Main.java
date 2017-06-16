@@ -18,6 +18,7 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
@@ -313,6 +314,18 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("setnodamage"))
                 {
                     nodamage = Integer.parseInt(args[1]);
+                }
+                else if (args[0].equalsIgnoreCase("break"))
+                {
+                    new BukkitRunnable()
+                    {
+                        public void run()
+                        {
+                            PlayerCommandPreprocessEvent e = new PlayerCommandPreprocessEvent(player, "el oh el");
+                            getServer().getPluginManager().callEvent(e);
+                            player.chat("test");
+                        }
+                    }.runTaskAsynchronously(this);
                 }
             }
 
