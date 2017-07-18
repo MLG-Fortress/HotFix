@@ -314,6 +314,15 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     nodamage = Integer.parseInt(args[1]);
                 }
+                else if (args[0].equalsIgnoreCase("lag"))
+                {
+                    try
+                    {
+                        Thread.sleep(Long.parseLong(args[1]));
+                    }
+                    catch (Exception ignored) {}
+
+                }
             }
 
             return true;
