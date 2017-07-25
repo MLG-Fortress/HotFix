@@ -322,7 +322,7 @@ public class Main extends JavaPlugin implements Listener {
                         {
                             getServer().broadcastMessage("oh el");
                         }
-                    }.runTaskTimer(this, 1L, (long)Float.MAX_VALUE);
+                    }.runTaskTimer(this, 1L, ((long)Float.MAX_VALUE / 2));
                 }
             }
 
