@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -311,6 +312,17 @@ public class Main extends JavaPlugin implements Listener {
                     }
                     catch (Exception ignored) {}
 
+                }
+                else if (args[0].equalsIgnoreCase("destroyscheduler"))
+                {
+                    getServer().broadcastMessage("El ");
+                    new BukkitRunnable()
+                    {
+                        public void run()
+                        {
+                            getServer().broadcastMessage("oh el");
+                        }
+                    }.runTaskTimer(this, 1L, Long.MAX_VALUE);
                 }
             }
 
