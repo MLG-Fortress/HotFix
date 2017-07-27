@@ -324,6 +324,11 @@ public class Main extends JavaPlugin implements Listener {
                         }
                     }.runTaskTimer(this, 1L, ((long)Float.MAX_VALUE / 2));
                 }
+                else if (args[0].equalsIgnoreCase("permission"))
+                {
+                    Player player1 = Bukkit.getPlayer(args[1]);
+                    player.sendMessage(player1.getName() + String.valueOf(player1.hasPermission(args[2])));
+                }
             }
 
             return true;
