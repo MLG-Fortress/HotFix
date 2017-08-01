@@ -3,6 +3,7 @@ version: ${project.version}
 #website:
 author: RoboMWM
 main: me.robomwm.HotFix.Main
+softdepend: [AbsorptionShields]
 commands:
    hotfix:
       description: no

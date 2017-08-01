@@ -10,13 +10,17 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import to.us.tf.absorptionshields.AbsorptionShields;
+import to.us.tf.absorptionshields.shield.ShieldUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -329,11 +333,50 @@ public class Main extends JavaPlugin implements Listener {
                     Player player1 = Bukkit.getPlayer(args[1]);
                     player.sendMessage(player1.getName() + String.valueOf(player1.hasPermission(args[2])));
                 }
+                else if (args[0].equalsIgnoreCase("shieldhealth"))
+                {
+                    toggleShieldDebug(player);
+                }
             }
 
             return true;
         }
         return false;
+    }
+
+    Player debugger = null;
+    ShieldUtils shieldUtils;
+
+    private void toggleShieldDebug(Player player)
+    {
+        if (debugger == null)
+            debugger = player;
+        else
+            debugger = null;
+        if (shieldUtils == null)
+            shieldUtils = ((AbsorptionShields)getServer().getPluginManager().getPlugin("AbsorptionShields")).getShieldUtils();
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    private void onDamage(EntityDamageEvent event)
+    {
+        if (debugger == null)
+            return;
+        if (event.getEntity() != debugger)
+            return;
+        debugger.sendMessage(event.getDamage() + "; " + event.getFinalDamage() + "; " + shieldUtils.getShieldHealth(debugger));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    private void onHeal(EntityRegainHealthEvent event)
+    {
+        if (debugger == null)
+            return;
+        if (event.getEntity() != debugger)
+            return;
+        if (event.getRegainReason() != EntityRegainHealthEvent.RegainReason.CUSTOM)
+            return;
+        debugger.sendMessage("Shield " + shieldUtils.getShieldHealth(debugger));
     }
 
     // ProjectKorra hotfix: This code cancels Explosions from other plugins
