@@ -337,6 +337,10 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     toggleShieldDebug(player);
                 }
+                else if (args[0].equalsIgnoreCase("damage"))
+                {
+                    player.damage(Double.valueOf(args[1]));
+                }
             }
 
             return true;
