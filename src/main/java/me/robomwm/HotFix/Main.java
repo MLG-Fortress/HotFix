@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -36,7 +37,7 @@ public class Main extends JavaPlugin implements Listener {
 
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        getConfig().createSection("blah");
+        ConfigurationSection blah = getConfig().createSection("blah");
         getConfig().set("blah", null);
         getLogger().info(String.valueOf(getConfig().contains("blah")));
         getLogger().info(String.valueOf(getConfig().isSet("blah")));
