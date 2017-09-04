@@ -36,6 +36,12 @@ public class Main extends JavaPlugin implements Listener {
 
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
+        getConfig().createSection("blah");
+        getConfig().set("blah", null);
+        getLogger().info(String.valueOf(getConfig().contains("blah")));
+        getLogger().info(String.valueOf(getConfig().isSet("blah")));
+        getLogger().info(String.valueOf(getConfig().get("blah") == null));
+        getLogger().info(String.valueOf(getConfig().getConfigurationSection("blah") == null));
     }
 
 
