@@ -16,10 +16,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import to.us.tf.absorptionshields.AbsorptionShields;
@@ -162,18 +164,45 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(tnt.getSource().toString());
     }
 
-    //midair dive
+
     @EventHandler(ignoreCancelled = true)
-    void onSneakInAir(PlayerToggleSprintEvent event)
+    void onSprint(PlayerToggleSprintEvent event)
     {
         if (!event.isSprinting())
             return;
-        if (event.getPlayer().isOnGround())
+        shiftAbility(event.getPlayer());
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    void onSneak(PlayerToggleSneakEvent event)
+    {
+        if (!event.isSneaking())
             return;
-//        if (event.getPlayer().hasMetadata("MD_SNEAKING"))
-//            return;
-        event.getPlayer().setVelocity(event.getPlayer().getLocation().getDirection());
-        event.setCancelled(true);
+        shiftAbility(event.getPlayer());
+    }
+
+    //midair dive
+    void shiftAbility(Player player)
+    {
+        if (player.isOnGround())
+            return;
+        if (player.hasMetadata("MD_USED_SHIFT"))
+            return;
+        player.setVelocity(player.getLocation().getDirection());
+        player.setFoodLevel(1);
+        player.setMetadata("MD_USED_SHIFT", new FixedMetadataValue(this, true));
+    }
+
+    @EventHandler
+    void onGround(PlayerMoveEvent event)
+    {
+        if (!event.getPlayer().isOnGround())
+            return;
+        if (event.getPlayer().hasMetadata("MD_USED_SHIFT"))
+        {
+            event.getPlayer().removeMetadata("MD_USED_SHIFT", this);
+            event.getPlayer().setFoodLevel(17);
+        }
     }
 
 //    @EventHandler(priority = EventPriority.MONITOR)
