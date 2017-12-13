@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,12 +38,6 @@ public class Main extends JavaPlugin implements Listener {
 
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        ConfigurationSection blah = getConfig().createSection("blah");
-        getConfig().set("blah", null);
-        getLogger().info(String.valueOf(getConfig().contains("blah")));
-        getLogger().info(String.valueOf(getConfig().isSet("blah")));
-        getLogger().info(String.valueOf(getConfig().get("blah") == null));
-        getLogger().info(String.valueOf(getConfig().getConfigurationSection("blah") == null));
     }
 
 
@@ -164,6 +159,19 @@ public class Main extends JavaPlugin implements Listener {
         TNTPrimed tnt = (TNTPrimed)event.getEntity();
         System.out.println(tnt.hashCode());
         Bukkit.broadcastMessage(tnt.getSource().toString());
+    }
+
+    //midair dive
+    @EventHandler
+    void onSneakInAir(PlayerToggleSneakEvent event)
+    {
+        if (!event.isSneaking())
+            return;
+        if (event.getPlayer().isOnGround())
+            return;
+//        if (event.getPlayer().hasMetadata("MD_SNEAKING"))
+//            return;
+        event.getPlayer().setVelocity(event.getPlayer().getLocation().getDirection());
     }
 
 //    @EventHandler(priority = EventPriority.MONITOR)
