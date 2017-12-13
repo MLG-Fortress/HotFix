@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -162,16 +163,17 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     //midair dive
-    @EventHandler
-    void onSneakInAir(PlayerToggleSneakEvent event)
+    @EventHandler(ignoreCancelled = true)
+    void onSneakInAir(PlayerToggleSprintEvent event)
     {
-        if (!event.isSneaking())
+        if (!event.isSprinting())
             return;
         if (event.getPlayer().isOnGround())
             return;
 //        if (event.getPlayer().hasMetadata("MD_SNEAKING"))
 //            return;
         event.getPlayer().setVelocity(event.getPlayer().getLocation().getDirection());
+        event.setCancelled(true);
     }
 
 //    @EventHandler(priority = EventPriority.MONITOR)
