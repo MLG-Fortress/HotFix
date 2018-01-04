@@ -164,47 +164,6 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(tnt.getSource().toString());
     }
 
-
-    @EventHandler(ignoreCancelled = true)
-    void onSprint(PlayerToggleSprintEvent event)
-    {
-        if (!event.isSprinting())
-            return;
-        shiftAbility(event.getPlayer());
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    void onSneak(PlayerToggleSneakEvent event)
-    {
-        if (!event.isSneaking())
-            return;
-        shiftAbility(event.getPlayer());
-    }
-
-    //midair dive
-    void shiftAbility(Player player)
-    {
-        if (player.isOnGround())
-            return;
-        if (player.hasMetadata("MD_USED_SHIFT"))
-            return;
-        player.setVelocity(player.getLocation().getDirection());
-        player.setFoodLevel(1);
-        player.setMetadata("MD_USED_SHIFT", new FixedMetadataValue(this, true));
-    }
-
-    @EventHandler
-    void onGround(PlayerMoveEvent event)
-    {
-        if (!event.getPlayer().isOnGround())
-            return;
-        if (event.getPlayer().hasMetadata("MD_USED_SHIFT"))
-        {
-            event.getPlayer().removeMetadata("MD_USED_SHIFT", this);
-            event.getPlayer().setFoodLevel(17);
-        }
-    }
-
 //    @EventHandler(priority = EventPriority.MONITOR)
 //    void onHurt(EntityDamageEvent event)
 //    {
