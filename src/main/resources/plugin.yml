@@ -5,11 +5,14 @@ author: RoboMWM
 main: me.robomwm.HotFix.Main
 softdepend: [AbsorptionShields]
 commands:
-   hotfix:
+    hotfix:
       description: no
       usage: /hotfix <target> <name>
       permission: hotfix.no
       permission-message: Ayyy leMayo
+    goldleggings:
+      usage: /goldleggings <levitation amplifier> <jump amplifier>
+   
 permissions:
     hotfix.no:
         description: Permission to /hotfix
