@@ -253,6 +253,7 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(chest.getClass().getSimpleName());
 
         DoubleChest doubleChest = (DoubleChest)(chest.getInventory().getHolder());
+        Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getCustomName());
         try
         {
             Chest leftChest = (Chest)((Chest)doubleChest.getLeftSide()).getBlock().getState();
