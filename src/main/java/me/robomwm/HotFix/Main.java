@@ -249,16 +249,18 @@ public class Main extends JavaPlugin implements Listener {
             return;
         if (event.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
-        Chest chest = (Chest)event.getClickedBlock().getState(false);
+        Chest chest = (Chest)event.getClickedBlock().getState();
         Bukkit.broadcastMessage(chest.getClass().getSimpleName());
 
         DoubleChest doubleChest = (DoubleChest)(chest.getInventory().getHolder());
         try
         {
-            ((Chest)doubleChest.getLeftSide()).setCustomName("test");
-            ((Chest)doubleChest.getRightSide()).setCustomName("ing");
-            Bukkit.broadcastMessage( String.valueOf(((Chest)doubleChest.getLeftSide()).update(true)));
-            Bukkit.broadcastMessage( String.valueOf(((Chest)doubleChest.getRightSide()).update(true)));
+            Chest leftChest = (Chest)((Chest)doubleChest.getLeftSide()).getBlock().getState();
+            leftChest.setCustomName("test");
+            Chest rightChest = (Chest)((Chest)doubleChest.getRightSide()).getBlock().getState();
+            rightChest.setCustomName("ing");
+            Bukkit.broadcastMessage( String.valueOf(leftChest.update()));
+            Bukkit.broadcastMessage( String.valueOf(rightChest.update()));
         }
         catch (Throwable rock)
         {
