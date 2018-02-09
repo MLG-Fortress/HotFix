@@ -1,5 +1,6 @@
 package me.robomwm.HotFix;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -256,8 +257,8 @@ public class Main extends JavaPlugin implements Listener {
         {
             ((Chest)doubleChest.getLeftSide()).setCustomName("test");
             ((Chest)doubleChest.getRightSide()).setCustomName("ing");
-//            ((Chest)doubleChest.getLeftSide()).update();
-//            ((Chest)doubleChest.getRightSide()).update();
+            Bukkit.broadcastMessage( String.valueOf(((Chest)doubleChest.getLeftSide()).update(true)));
+            Bukkit.broadcastMessage( String.valueOf(((Chest)doubleChest.getRightSide()).update(true)));
         }
         catch (Throwable rock)
         {
