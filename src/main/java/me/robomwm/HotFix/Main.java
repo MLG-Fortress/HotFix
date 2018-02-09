@@ -256,8 +256,8 @@ public class Main extends JavaPlugin implements Listener {
         {
             ((Chest)doubleChest.getLeftSide()).setCustomName("test");
             ((Chest)doubleChest.getRightSide()).setCustomName("ing");
-            ((Chest)doubleChest.getLeftSide()).update();
-            ((Chest)doubleChest.getRightSide()).update();
+//            ((Chest)doubleChest.getLeftSide()).update();
+//            ((Chest)doubleChest.getRightSide()).update();
         }
         catch (Throwable rock)
         {
