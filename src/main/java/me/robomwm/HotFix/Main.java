@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
@@ -28,6 +29,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import to.us.tf.absorptionshields.AbsorptionShields;
 import to.us.tf.absorptionshields.shield.ShieldUtils;
@@ -167,47 +170,6 @@ public class Main extends JavaPlugin implements Listener {
         TNTPrimed tnt = (TNTPrimed)event.getEntity();
         System.out.println(tnt.hashCode());
         Bukkit.broadcastMessage(tnt.getSource().toString());
-    }
-
-
-    @EventHandler(ignoreCancelled = true)
-    void onSprint(PlayerToggleSprintEvent event)
-    {
-        if (!event.isSprinting())
-            return;
-        shiftAbility(event.getPlayer());
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    void onSneak(PlayerToggleSneakEvent event)
-    {
-        if (!event.isSneaking())
-            return;
-        shiftAbility(event.getPlayer());
-    }
-
-    //midair dive
-    void shiftAbility(Player player)
-    {
-        if (player.isOnGround())
-            return;
-        if (player.hasMetadata("MD_USED_SHIFT"))
-            return;
-        player.setVelocity(player.getLocation().getDirection());
-        player.setFoodLevel(1);
-        player.setMetadata("MD_USED_SHIFT", new FixedMetadataValue(this, true));
-    }
-
-    @EventHandler
-    void onGround(PlayerMoveEvent event)
-    {
-        if (!event.getPlayer().isOnGround())
-            return;
-        if (event.getPlayer().hasMetadata("MD_USED_SHIFT"))
-        {
-            event.getPlayer().removeMetadata("MD_USED_SHIFT", this);
-            event.getPlayer().setFoodLevel(17);
-        }
     }
 
 //    @EventHandler(priority = EventPriority.MONITOR)
@@ -428,7 +390,38 @@ public class Main extends JavaPlugin implements Listener {
 
             return true;
         }
+//        if (cmd.getName().equalsIgnoreCase("goldleggings"))
+//        {
+//            Player player = (Player)sender;
+//            if (player.getWorld().getName().equalsIgnoreCase("CreativeParkourMaps"))
+//                return false;
+//            if (args.length < 2)
+//                return false;
+//            int levitation;
+//            int jump;
+//            try
+//            {
+//                levitation = Integer.parseInt(args[0]);
+//                jump = Integer.parseInt(args[1]);
+//            }
+//            catch (Throwable rock)
+//            {
+//                return false;
+//            }
+//            for (PotionEffect potionEffect : player.getActivePotionEffects())
+//                player.removePotionEffect(potionEffect.getType());
+//            player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 1200, levitation, true, false));
+//            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, jump, true, false));
+//        }
         return false;
+    }
+
+    @EventHandler
+    private void onWorldChange(PlayerChangedWorldEvent event)
+    {
+        if (event.getPlayer().getWorld().getName().equalsIgnoreCase("CreativeParkourMaps"))
+            for (PotionEffect potionEffect : event.getPlayer().getActivePotionEffects())
+                event.getPlayer().removePotionEffect(potionEffect.getType());
     }
 
     Player debugger = null;
