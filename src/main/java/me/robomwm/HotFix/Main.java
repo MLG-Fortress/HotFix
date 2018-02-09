@@ -248,7 +248,7 @@ public class Main extends JavaPlugin implements Listener {
             return;
         if (event.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
-        Chest chest = (Chest)event.getClickedBlock().getState();
+        Chest chest = (Chest)event.getClickedBlock().getState(false);
         Bukkit.broadcastMessage(chest.getClass().getSimpleName());
 
         DoubleChest doubleChest = (DoubleChest)(chest.getInventory().getHolder());
