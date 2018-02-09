@@ -3,6 +3,8 @@ package me.robomwm.HotFix;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -13,12 +15,15 @@ import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -262,14 +267,46 @@ public class Main extends JavaPlugin implements Listener {
 
     int nodamage = 20;
 
+//    @EventHandler
+//    void onEntityDamage(EntityDamageEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (!(event.getEntity() instanceof LivingEntity))
+//            return;
+//        ((LivingEntity)event.getEntity()).setNoDamageTicks(nodamage);
+//    }
+
     @EventHandler
-    void onEntityDamage(EntityDamageEvent event)
+    private void chestNamer(PlayerInteractEvent event)
     {
         if (!herp)
             return;
-        if (!(event.getEntity() instanceof LivingEntity))
+        if (!event.getPlayer().isOp())
             return;
-        ((LivingEntity)event.getEntity()).setNoDamageTicks(nodamage);
+        if (event.getAction() != Action.LEFT_CLICK_BLOCK)
+            return;
+        InventoryHolder inventoryHolder = (InventoryHolder)event.getClickedBlock().getState();
+        Bukkit.broadcastMessage(inventoryHolder.getClass().getSimpleName());
+        if (!(inventoryHolder instanceof DoubleChest))
+        {
+            Bukkit.broadcastMessage("not a doublechest");
+            return;
+        }
+        DoubleChest doubleChest = (DoubleChest)inventoryHolder;
+        try
+        {
+            ((Chest)doubleChest.getLeftSide()).setCustomName("test");
+            ((Chest)doubleChest.getRightSide()).setCustomName("ing");
+            ((Chest)doubleChest.getLeftSide()).update();
+            ((Chest)doubleChest.getRightSide()).update();
+        }
+        catch (Throwable rock)
+        {
+            rock.printStackTrace();
+            Bukkit.broadcastMessage(doubleChest.getLeftSide().getClass().getSimpleName());
+        }
+
     }
 
     @Override
@@ -407,27 +444,27 @@ public class Main extends JavaPlugin implements Listener {
             shieldUtils = ((AbsorptionShields)getServer().getPluginManager().getPlugin("AbsorptionShields")).getShieldUtils();
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    private void onDamage(EntityDamageEvent event)
-    {
-        if (debugger == null)
-            return;
-        if (event.getEntity() != debugger)
-            return;
-        debugger.sendMessage(event.getDamage() + "; " + event.getFinalDamage() + "; " + shieldUtils.getShieldHealth(debugger));
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    private void onHeal(EntityRegainHealthEvent event)
-    {
-        if (debugger == null)
-            return;
-        if (event.getEntity() != debugger)
-            return;
-        if (event.getRegainReason() != EntityRegainHealthEvent.RegainReason.CUSTOM)
-            return;
-        debugger.sendMessage("Shield " + shieldUtils.getShieldHealth(debugger));
-    }
+//    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+//    private void onDamage(EntityDamageEvent event)
+//    {
+//        if (debugger == null)
+//            return;
+//        if (event.getEntity() != debugger)
+//            return;
+//        debugger.sendMessage(event.getDamage() + "; " + event.getFinalDamage() + "; " + shieldUtils.getShieldHealth(debugger));
+//    }
+//
+//    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+//    private void onHeal(EntityRegainHealthEvent event)
+//    {
+//        if (debugger == null)
+//            return;
+//        if (event.getEntity() != debugger)
+//            return;
+//        if (event.getRegainReason() != EntityRegainHealthEvent.RegainReason.CUSTOM)
+//            return;
+//        debugger.sendMessage("Shield " + shieldUtils.getShieldHealth(debugger));
+//    }
 
     // ProjectKorra hotfix: This code cancels Explosions from other plugins
     // https://github.com/ProjectKorra/ProjectKorra/issues/400
