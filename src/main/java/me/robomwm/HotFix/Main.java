@@ -254,7 +254,7 @@ public class Main extends JavaPlugin implements Listener {
 
         DoubleChest doubleChest = (DoubleChest)(chest.getInventory().getHolder());
         chest.getInventory().addItem(event.getItem());
-        chest.update();
+        //chest.update();
 
         Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getCustomName());
         try
