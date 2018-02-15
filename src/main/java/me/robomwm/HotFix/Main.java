@@ -240,41 +240,41 @@ public class Main extends JavaPlugin implements Listener {
 //        ((LivingEntity)event.getEntity()).setNoDamageTicks(nodamage);
 //    }
 
-    @EventHandler
-    private void chestNamer(PlayerInteractEvent event)
-    {
-        if (!herp)
-            return;
-        if (!event.getPlayer().isOp())
-            return;
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK)
-            return;
-        Chest chest = (Chest)event.getClickedBlock().getState();
-        Bukkit.broadcastMessage(chest.getClass().getSimpleName());
-
-        DoubleChest doubleChest = (DoubleChest)(chest.getInventory().getHolder());
-        chest.getInventory().addItem(event.getItem());
-        //chest.update();
-
-        Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getCustomName());
-        try
-        {
-            Bukkit.broadcastMessage(((Chest)doubleChest.getRightSide()).getLocation().toString());
-            Bukkit.broadcastMessage(doubleChest.getLocation().toString());
-//            Chest leftChest = (Chest)((Chest)doubleChest.getLeftSide()).getBlock().getState();
-//            leftChest.setCustomName("test");
-//            Chest rightChest = (Chest)((Chest)doubleChest.getRightSide()).getBlock().getState();
-//            rightChest.setCustomName("ing");
-//            Bukkit.broadcastMessage( String.valueOf(leftChest.update()));
-//            Bukkit.broadcastMessage( String.valueOf(rightChest.update()));
-        }
-        catch (Throwable rock)
-        {
-            rock.printStackTrace();
-            Bukkit.broadcastMessage(doubleChest.getLeftSide().getClass().getSimpleName());
-        }
-
-    }
+//    @EventHandler
+//    private void chestNamer(PlayerInteractEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (!event.getPlayer().isOp())
+//            return;
+//        if (event.getAction() != Action.LEFT_CLICK_BLOCK)
+//            return;
+//        Chest chest = (Chest)event.getClickedBlock().getState();
+//        Bukkit.broadcastMessage(chest.getClass().getSimpleName());
+//
+//        DoubleChest doubleChest = (DoubleChest)(chest.getInventory().getHolder());
+//        chest.getInventory().addItem(event.getItem());
+//        //chest.update();
+//
+//        Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getCustomName());
+//        try
+//        {
+//            Bukkit.broadcastMessage(((Chest)doubleChest.getRightSide()).getLocation().toString());
+//            Bukkit.broadcastMessage(doubleChest.getLocation().toString());
+////            Chest leftChest = (Chest)((Chest)doubleChest.getLeftSide()).getBlock().getState();
+////            leftChest.setCustomName("test");
+////            Chest rightChest = (Chest)((Chest)doubleChest.getRightSide()).getBlock().getState();
+////            rightChest.setCustomName("ing");
+////            Bukkit.broadcastMessage( String.valueOf(leftChest.update()));
+////            Bukkit.broadcastMessage( String.valueOf(rightChest.update()));
+//        }
+//        catch (Throwable rock)
+//        {
+//            rock.printStackTrace();
+//            Bukkit.broadcastMessage(doubleChest.getLeftSide().getClass().getSimpleName());
+//        }
+//
+//    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
@@ -390,6 +390,10 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("damage"))
                 {
                     player.damage(Double.valueOf(args[1]));
+                }
+                else if (args[0].equalsIgnoreCase("speed"))
+                {
+                    player.setWalkSpeed(Float.valueOf(args[1]));
                 }
             }
 
