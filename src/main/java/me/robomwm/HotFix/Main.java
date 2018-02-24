@@ -20,11 +20,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -275,6 +277,18 @@ public class Main extends JavaPlugin implements Listener {
 //        }
 //
 //    }
+
+    @EventHandler
+    private void testCraft(InventoryCloseEvent event)
+    {
+        if (!herp)
+            return;
+        if (!event.getPlayer().isOp())
+            return;
+        CraftingInventory inventory = (CraftingInventory) event.getInventory();
+        for (ItemStack item : inventory.getMatrix())
+            event.getPlayer().sendMessage(item.toString());
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
