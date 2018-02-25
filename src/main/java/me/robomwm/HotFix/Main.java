@@ -296,7 +296,7 @@ public class Main extends JavaPlugin implements Listener {
         char i = 'b';
         for (ItemStack item : inventory.getMatrix())
         {
-            if (ingredients.containsKey(item.getType()))
+            if (item == null || ingredients.containsKey(item.getType()))
                 continue;
             ingredients.put(item.getType(), i++);
         }
