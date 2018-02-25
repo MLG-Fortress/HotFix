@@ -341,6 +341,8 @@ public class Main extends JavaPlugin implements Listener {
                     row.append(charMap.get(material));
                 }
             }
+            if (row.length() > 0)
+                trimmedMatrix.add(row.toString());
         }
 
         Bukkit.broadcastMessage(StringUtils.join(trimmedMatrix, ":"));
