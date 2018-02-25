@@ -332,7 +332,7 @@ public class Main extends JavaPlugin implements Listener {
             StringBuilder row = new StringBuilder();
             for (int j = 0; j < 3; j++)
             {
-                if (rows[i] + columns[j] >= 1)
+                if (rows[i] + columns[j] > 1)
                 {
                     Material material = null;
                     ItemStack item = matrix[3*i+j];
