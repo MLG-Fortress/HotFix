@@ -428,27 +428,10 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     player.setWalkSpeed(Float.valueOf(args[1]));
                 }
-                else if (args[0].equalsIgnoreCase("recipe"))
+                else if (args[0].equalsIgnoreCase("perm"))
                 {
-                    getServer().resetRecipes();
-                    List<Keyed> existingRecipes = new LinkedList<>();
-                    Iterator<Recipe> recipeIterator = getServer().recipeIterator();
-                    while (recipeIterator.hasNext())
-                    {
-                        Recipe recipe = recipeIterator.next();
-                        if (recipe instanceof Keyed)
-                            existingRecipes.add((Keyed)recipe);
-                    }
-                    getServer().resetRecipes();
-                    recipeIterator = getServer().recipeIterator();
-                    while (recipeIterator.hasNext())
-                    {
-                        Recipe recipe = recipeIterator.next();
-                        if (recipe instanceof Keyed)
-                            existingRecipes.remove((Keyed)recipe);
-                    }
-                    for (Keyed recipe : existingRecipes)
-                        getServer().addRecipe((Recipe)recipe);
+                    Player player1 = Bukkit.getPlayer(args[1]);
+                    player.sendMessage(String.valueOf(player1.hasPermission(args[2])));
                 }
             }
 
