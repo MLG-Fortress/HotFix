@@ -321,7 +321,9 @@ public class Main extends JavaPlugin implements Listener {
             }
             else if (args.length > 1)
             {
-                Player player = (Player)sender;
+                Player player = null;
+                if (sender instanceof Player)
+                    player = (Player)sender;
 
                 if (args[0].equalsIgnoreCase("uuid"))
                 {
@@ -431,7 +433,7 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("perm"))
                 {
                     Player player1 = Bukkit.getPlayer(args[1]);
-                    player.sendMessage(String.valueOf(player1.hasPermission(args[2])));
+                    sender.sendMessage(String.valueOf(player1.hasPermission(args[2])));
                 }
             }
 
