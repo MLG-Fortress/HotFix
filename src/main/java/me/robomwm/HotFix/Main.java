@@ -283,71 +283,27 @@ public class Main extends JavaPlugin implements Listener {
 //
 //    }
 
-    @EventHandler
-    private void testCraft(InventoryCloseEvent event)
-    {
-        if (!herp)
-            return;
-        if (!event.getPlayer().isOp())
-            return;
-        CraftingInventory inventory = (CraftingInventory) event.getInventory();
-        Map<Material, Character> ingredients = new HashMap<>();
-        ingredients.put(null, 'a');
-        char i = 'b';
-        for (ItemStack item : inventory.getMatrix())
-        {
-            if (item == null || ingredients.containsKey(item.getType()))
-                continue;
-            ingredients.put(item.getType(), i++);
-        }
-        getShapedMatrix(ingredients, inventory.getMatrix());
-    }
+//    @EventHandler
+//    private void testCraft(InventoryCloseEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (!event.getPlayer().isOp())
+//            return;
+//        CraftingInventory inventory = (CraftingInventory) event.getInventory();
+//        Map<Material, Character> ingredients = new HashMap<>();
+//        ingredients.put(null, 'a');
+//        char i = 'b';
+//        for (ItemStack item : inventory.getMatrix())
+//        {
+//            if (item == null || ingredients.containsKey(item.getType()))
+//                continue;
+//            ingredients.put(item.getType(), i++);
+//        }
+//        getShapedMatrix(ingredients, inventory.getMatrix());
+//    }
 
-    private List<String> getShapedMatrix(Map<Material, Character> charMap, ItemStack... matrix)
-    {
-        //Check row and column length
-        int[] rows = new int[3];
-        int[] columns = new int[3];
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                if (matrix[3*i+j] != null)
-                    rows[i] = 1;
-                if (matrix[3*j+i] != null)
-                    columns[i] = 1;
-            }
-        }
 
-        //rows/columns must be contiguous
-        if (rows[0] == 1 && rows[2] == 1)
-            rows[1] = 1;
-        if (columns[0] == 1 && columns[2] == 1)
-            columns[1] = 1;
-
-        List<String> trimmedMatrix = new ArrayList<>();
-
-        for (int i = 0; i < 3; i++)
-        {
-            StringBuilder row = new StringBuilder();
-            for (int j = 0; j < 3; j++)
-            {
-                if (rows[i] + columns[j] > 1)
-                {
-                    Material material = null;
-                    ItemStack item = matrix[3*i+j];
-                    if (item != null)
-                        material = item.getType();
-                    row.append(charMap.get(material));
-                }
-            }
-            if (row.length() > 0)
-                trimmedMatrix.add(row.toString());
-        }
-
-        Bukkit.broadcastMessage(StringUtils.join(trimmedMatrix, ":"));
-        return trimmedMatrix;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
@@ -467,6 +423,10 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("speed"))
                 {
                     player.setWalkSpeed(Float.valueOf(args[1]));
+                }
+                else if (args[0].equalsIgnoreCase("recipe"))
+                {
+                    getServer().resetRecipes();
                 }
             }
 
