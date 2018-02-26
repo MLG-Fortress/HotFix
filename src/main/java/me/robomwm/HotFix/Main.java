@@ -436,12 +436,13 @@ public class Main extends JavaPlugin implements Listener {
                     while (recipeIterator.hasNext())
                     {
                         Recipe recipe = recipeIterator.next();
-                        existingRecipes.add((Keyed)recipe);
+                        if (recipe instanceof Keyed)
+                            existingRecipes.add((Keyed)recipe);
                     }
                     getServer().resetRecipes();
-                    recipeIterator = getServer().recipeIterator();
-                    while (recipeIterator.hasNext())
-                        existingRecipes.remove((Keyed)recipeIterator.next());
+                    //recipeIterator = getServer().recipeIterator();
+//                    while (recipeIterator.hasNext())
+//                        existingRecipes.remove((Keyed)recipeIterator.next());
                     for (Keyed recipe : existingRecipes)
                         getServer().addRecipe((Recipe)recipe);
                 }
