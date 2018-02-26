@@ -30,6 +30,7 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +43,8 @@ import to.us.tf.absorptionshields.shield.ShieldUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -427,6 +430,16 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("recipe"))
                 {
                     getServer().resetRecipes();
+                    List<Recipe> existingRecipes = new LinkedList<>();
+                    Iterator<Recipe> recipeIterator = getServer().recipeIterator();
+                    while (recipeIterator.hasNext())
+                    {
+                        Recipe recipe = recipeIterator.next();
+                        existingRecipes.add(recipe);
+                    }
+                    getServer().resetRecipes();
+                    for (Recipe recipe : existingRecipes)
+                        getServer().addRecipe(recipe);
                 }
             }
 
