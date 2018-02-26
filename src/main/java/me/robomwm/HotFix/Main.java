@@ -3,6 +3,7 @@ package me.robomwm.HotFix;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Chest;
@@ -430,16 +431,19 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("recipe"))
                 {
                     getServer().resetRecipes();
-                    List<Recipe> existingRecipes = new LinkedList<>();
+                    List<Keyed> existingRecipes = new LinkedList<>();
                     Iterator<Recipe> recipeIterator = getServer().recipeIterator();
                     while (recipeIterator.hasNext())
                     {
                         Recipe recipe = recipeIterator.next();
-                        existingRecipes.add(recipe);
+                        existingRecipes.add((Keyed)recipe);
                     }
                     getServer().resetRecipes();
-                    for (Recipe recipe : existingRecipes)
-                        getServer().addRecipe(recipe);
+                    recipeIterator = getServer().recipeIterator();
+                    while (recipeIterator.hasNext())
+                        existingRecipes.remove((Keyed)recipeIterator.next());
+                    for (Keyed recipe : existingRecipes)
+                        getServer().addRecipe((Recipe)recipe);
                 }
             }
 
