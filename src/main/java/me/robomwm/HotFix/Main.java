@@ -25,6 +25,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
@@ -182,6 +183,20 @@ public class Main extends JavaPlugin implements Listener {
         TNTPrimed tnt = (TNTPrimed)event.getEntity();
         System.out.println(tnt.hashCode());
         Bukkit.broadcastMessage(tnt.getSource().toString());
+    }
+
+    private OfflinePlayer offlinePlayer;
+    @EventHandler
+    void onWhatever(PlayerJoinEvent event)
+    {
+        if (!herp)
+            return;
+        if (offlinePlayer == event.getPlayer())
+        {
+            Bukkit.broadcastMessage("match");
+            return;
+        }
+        offlinePlayer = event.getPlayer();
     }
 
 //    @EventHandler(priority = EventPriority.MONITOR)
