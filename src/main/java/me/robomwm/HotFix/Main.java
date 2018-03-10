@@ -453,7 +453,7 @@ public class Main extends JavaPlugin implements Listener {
                 }
                 else if (args[0].equalsIgnoreCase("book"))
                 {
-                    player.sendPluginMessage(this, "MC|BOpen", new byte[] {(byte) 0});
+                    player.sendPluginMessage(this, "MC|BOpen", new byte[] {0});
                 }
             }
 
