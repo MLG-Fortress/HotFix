@@ -450,6 +450,10 @@ public class Main extends JavaPlugin implements Listener {
                     Player player1 = Bukkit.getPlayer(args[1]);
                     sender.sendMessage(String.valueOf(player1.hasPermission(args[2])));
                 }
+                else if (args[0].equalsIgnoreCase("book"))
+                {
+                    player.sendPluginMessage(this, "MC|BOpen", new byte[0]);
+                }
             }
 
             return true;
