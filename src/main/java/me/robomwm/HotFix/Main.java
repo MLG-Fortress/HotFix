@@ -453,7 +453,9 @@ public class Main extends JavaPlugin implements Listener {
                 }
                 else if (args[0].equalsIgnoreCase("book"))
                 {
+                    getServer().getMessenger().registerOutgoingPluginChannel(this, "MC|BOpen");
                     player.sendPluginMessage(this, "MC|BOpen", new byte[] {0});
+                    player.sendMessage("opened book??");
                 }
             }
 
