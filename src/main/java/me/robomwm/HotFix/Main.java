@@ -1,5 +1,8 @@
 package me.robomwm.HotFix;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -453,9 +456,11 @@ public class Main extends JavaPlugin implements Listener {
                 }
                 else if (args[0].equalsIgnoreCase("book"))
                 {
-                    getServer().getMessenger().registerOutgoingPluginChannel(this, "MC|BOpen");
-                    player.sendPluginMessage(this, "MC|BOpen", new byte[] {0});
-                    player.sendMessage("opened book??");
+                    TextComponent textComponent = new TextComponent(args[1]);
+                    textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, args[2]));
+                    if (args.length > 3)
+                        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(args[3])));
+                    player.sendMessage(textComponent);
                 }
             }
 
