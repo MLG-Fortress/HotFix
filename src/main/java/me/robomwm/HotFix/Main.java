@@ -514,7 +514,7 @@ public class Main extends JavaPlugin implements Listener {
     private BaseComponent[] buildPage(Object... strings)
     {
         List<BaseComponent> baseComponents = new ArrayList<>(strings.length);
-        for (Object object : baseComponents)
+        for (Object object : strings)
         {
             if (object instanceof TextComponent)
                 baseComponents.add((TextComponent)object);
