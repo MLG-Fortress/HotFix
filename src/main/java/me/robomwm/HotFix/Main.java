@@ -470,6 +470,10 @@ public class Main extends JavaPlugin implements Listener {
                     player.sendMessage(baseComponents.toArray(new BaseComponent[0]));
                     player.sendMessage(buildPage(getClickableChat(args[1], args[2], args[3]), getClickableChat(args[1], args[2], args[3])));
                 }
+                else if (args[0].equalsIgnoreCase("action"))
+                {
+                    player.sendActionBar('&', String.join(" ", args));
+                }
             }
 
             return true;
