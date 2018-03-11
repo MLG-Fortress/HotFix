@@ -1,5 +1,6 @@
 package me.robomwm.HotFix;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -46,6 +47,7 @@ import to.us.tf.absorptionshields.AbsorptionShields;
 import to.us.tf.absorptionshields.shield.ShieldUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -461,6 +463,7 @@ public class Main extends JavaPlugin implements Listener {
                     if (args.length > 3)
                         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(args[3])));
                     player.sendMessage(getClickableChat(args[1], args[2], args[3]));
+                    player.sendMessage(buildPage(getClickableChat(args[1], args[2], args[3]), getClickableChat(args[1], args[2], args[3])));
                 }
             }
 
@@ -501,6 +504,19 @@ public class Main extends JavaPlugin implements Listener {
         if (hover != null)
             textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(hover)));
         return textComponent;
+    }
+
+    private BaseComponent[] buildPage(Object... strings)
+    {
+        List<BaseComponent> baseComponents = new ArrayList<>(strings.length);
+        for (Object object : baseComponents)
+        {
+            if (object instanceof TextComponent)
+                baseComponents.add((TextComponent)object);
+            else if (object instanceof String)
+                baseComponents.addAll(Arrays.asList(TextComponent.fromLegacyText((String)object)));
+        }
+        return baseComponents.toArray(new BaseComponent[0]);
     }
 
     @EventHandler
