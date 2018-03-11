@@ -463,7 +463,10 @@ public class Main extends JavaPlugin implements Listener {
                     if (args.length > 3)
                         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(args[3])));
                     player.sendMessage(getClickableChat(args[1], args[2], args[3]));
-                    player.sendMessage(getClickableChat(args[1], args[2], args[3]), getClickableChat(args[1], args[2], args[3]));
+                    List<BaseComponent> baseComponents = new ArrayList<>();
+                    baseComponents.add(getClickableChat(args[1], args[2], args[3]));
+                    baseComponents.add(getClickableChat(args[1], args[2], args[3]));
+                    player.sendMessage(baseComponents.toArray(new BaseComponent[0]));
                     player.sendMessage(buildPage(getClickableChat(args[1], args[2], args[3]), getClickableChat(args[1], args[2], args[3])));
                 }
             }
