@@ -460,12 +460,14 @@ public class Main extends JavaPlugin implements Listener {
                     textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, args[2]));
                     if (args.length > 3)
                         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(args[3])));
-                    player.sendMessage(textComponent);
+                    player.sendMessage(getClickableChat(args[1], args[2], args[3]));
                 }
             }
 
             return true;
         }
+
+
 //        if (cmd.getName().equalsIgnoreCase("goldleggings"))
 //        {
 //            Player player = (Player)sender;
@@ -490,6 +492,15 @@ public class Main extends JavaPlugin implements Listener {
 //            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, jump, true, false));
 //        }
         return false;
+    }
+
+    private TextComponent getClickableChat(String message, String command, String hover)
+    {
+        TextComponent textComponent = new TextComponent(message);
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
+        if (hover != null)
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(hover)));
+        return textComponent;
     }
 
     @EventHandler
