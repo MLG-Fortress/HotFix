@@ -331,6 +331,7 @@ public class Main extends JavaPlugin implements Listener {
 //    }
 
 
+    private Location firstLocation;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
@@ -479,6 +480,16 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("music"))
                 {
                     player.playSound(new Location(player.getWorld(), 0, 5, 64), "music.spawn.kahoot", SoundCategory.RECORDS, 1.0f, 1.0f);
+                }
+                else if (args[0].equalsIgnoreCase("distance"))
+                {
+                    if (firstLocation != null)
+                    {
+                        player.sendMessage(Double.toString(firstLocation.distance(player.getLocation())));
+                        firstLocation = null;
+                    }
+                    else
+                        firstLocation = player.getTargetBlock(null,10).getLocation();
                 }
             }
 
