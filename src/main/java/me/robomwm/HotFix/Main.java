@@ -8,8 +8,10 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Keyed;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.command.Command;
@@ -340,7 +342,7 @@ public class Main extends JavaPlugin implements Listener {
                 herp = !herp;
                 sender.sendMessage(String.valueOf(herp));
             }
-            else if (args.length > 1)
+            else if (args.length >= 1)
             {
                 Player player = null;
                 if (sender instanceof Player)
@@ -473,6 +475,10 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("action"))
                 {
                     player.sendActionBar('&', String.join(" ", args));
+                }
+                else if (args[0].equalsIgnoreCase("music"))
+                {
+                    player.playSound(new Location(player.getWorld(), 0, 5, -64), "music.spawn.kahoot", SoundCategory.RECORDS, 1.0f, 1.0f);
                 }
             }
 
