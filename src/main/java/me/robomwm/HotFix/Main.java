@@ -480,7 +480,7 @@ public class Main extends JavaPlugin implements Listener {
                 else if (args[0].equalsIgnoreCase("music"))
                 {
                     for (int i = 0; i < 10; i++)
-                        player.playSound(new Location(player.getWorld(), 0, 5, 64), "music.spawn.kahoot", SoundCategory.RECORDS, 1.0f, 1.0f);
+                        player.playSound(new Location(player.getWorld(), 2, 5, 298), args[1], SoundCategory.RECORDS, Float.valueOf(args[2]), 1.0f);
                 }
                 else if (args[0].equalsIgnoreCase("distance"))
                 {
