@@ -483,13 +483,29 @@ public class Main extends JavaPlugin implements Listener {
                 }
                 else if (args[0].equalsIgnoreCase("distance"))
                 {
-                    if (firstLocation != null)
+
+                    if (firstLocation == null)
                     {
-                        player.sendMessage(Double.toString(firstLocation.distance(player.getLocation())));
-                        firstLocation = null;
+                        Player finalPlayer = player;
+                        firstLocation = player.getTargetBlock(null, 100).getLocation();
+                        new BukkitRunnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                if (firstLocation == null)
+                                {
+                                    cancel();
+                                    return;
+                                }
+                                finalPlayer.sendActionBar(Double.toString(firstLocation.distance(finalPlayer.getLocation())));
+                            }
+                        }.runTaskTimer(this, 40L, 40L);
                     }
                     else
-                        firstLocation = player.getTargetBlock(null,10).getLocation();
+                    {
+                        firstLocation = null;
+                    }
                 }
             }
 
