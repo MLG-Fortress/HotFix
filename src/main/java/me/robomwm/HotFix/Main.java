@@ -197,6 +197,14 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    private void respawnEvent(PlayerRespawnEvent event)
+    {
+        if (!herp)
+            return;
+        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead() + " location:" + event.getPlayer().getLocation().toString());
+    }
+
+    @EventHandler
     private void teleports(PlayerTeleportEvent event)
     {
         if (!herp)
