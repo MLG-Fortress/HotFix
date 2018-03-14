@@ -34,6 +34,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.CraftingInventory;
@@ -194,18 +196,21 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(tnt.getSource().toString());
     }
 
-    private OfflinePlayer offlinePlayer;
     @EventHandler
-    void onWhatever(PlayerJoinEvent event)
+    private void teleports(PlayerTeleportEvent event)
     {
         if (!herp)
             return;
-        if (offlinePlayer == event.getPlayer())
-        {
-            Bukkit.broadcastMessage("match");
+        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead() + " cause:" + event.getCause().toString());
+
+    }
+
+    @EventHandler
+    private void changeWorld(PlayerChangedWorldEvent event)
+    {
+        if (!herp)
             return;
-        }
-        offlinePlayer = event.getPlayer();
+        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead());
     }
 
     @EventHandler
