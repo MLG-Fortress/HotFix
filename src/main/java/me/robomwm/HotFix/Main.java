@@ -28,6 +28,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -205,6 +206,15 @@ public class Main extends JavaPlugin implements Listener {
             return;
         }
         offlinePlayer = event.getPlayer();
+    }
+
+    @EventHandler
+    private void death(PlayerDeathEvent event)
+    {
+        if (!herp)
+            return;
+        if (event.getEntity().getKiller() != null)
+            event.getEntity().sendMessage(event.getEntity().getKiller().getName());
     }
 
 //    @EventHandler(priority = EventPriority.MONITOR)
