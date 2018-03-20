@@ -17,18 +17,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -579,28 +575,6 @@ public class Main extends JavaPlugin implements Listener {
 //            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, jump, true, false));
 //        }
         return false;
-    }
-
-    @EventHandler
-    private void hmm(PlayerChatEvent event)
-    {
-        if (!herp)
-            return;
-        for (RegisteredListener listener : event.getHandlers().getRegisteredListeners())
-            Bukkit.broadcastMessage(listener.getListener().getClass().getCanonicalName());
-        Bukkit.broadcastMessage("Event is async: " + String.valueOf(event.isAsynchronous()));
-        Bukkit.broadcastMessage("On main thread: " + String.valueOf(Bukkit.isPrimaryThread()));
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    private void onChat(AsyncPlayerChatEvent event)
-    {
-        if (!herp)
-            return;
-        for (RegisteredListener listener : event.getHandlers().getRegisteredListeners())
-            Bukkit.broadcastMessage(listener.getListener().getClass().getCanonicalName());
-        Bukkit.broadcastMessage("Event is async: " + String.valueOf(event.isAsynchronous()));
-        Bukkit.broadcastMessage("On main thread: " + String.valueOf(Bukkit.isPrimaryThread()));
     }
 
     private Player getClosestPlayer(Location location)
