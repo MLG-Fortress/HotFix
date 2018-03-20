@@ -31,6 +31,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -45,6 +46,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -555,7 +557,7 @@ public class Main extends JavaPlugin implements Listener {
                             }
 
 
-                            Vector vector = getClosestPlayer(firstLocation).getLocation().add(0, 2, 0).toVector().subtract(firstLocation.toVector());
+                            Vector vector = getClosestPlayer(firstLocation).getLocation().add(0, 1.5, 0).toVector().subtract(firstLocation.toVector());
                             Iterator<Block> blocks = new BlockIterator(firstLocation.getWorld(), firstLocation.toVector(), vector, 0, Math.min(100, (int)vector.length()));
                             blocks.next();
                             blocks.next();
@@ -599,6 +601,15 @@ public class Main extends JavaPlugin implements Listener {
 //            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, jump, true, false));
 //        }
         return false;
+    }
+
+    @EventHandler
+    private void onChat(AsyncPlayerChatEvent event)
+    {
+        if (!herp)
+            return;
+        for (RegisteredListener listener : event.getHandlers().getRegisteredListeners())
+            Bukkit.broadcastMessage(listener.getPlugin().getName());
     }
 
     private Player getClosestPlayer(Location location)
