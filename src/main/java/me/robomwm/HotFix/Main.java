@@ -558,12 +558,13 @@ public class Main extends JavaPlugin implements Listener {
                             blocks.next();
                             while (blocks.hasNext())
                             {
-                                if (blocks.next() != null)
-                                    return;
+                                Block block = blocks.next();
+                                if (block != null)
+                                    finalPlayer.sendActionBar(block.toString());
                             }
                             firstLocation.getWorld().spawnEntity(firstLocation, EntityType.ARROW).setVelocity(vector);
                         }
-                    }.runTaskTimer(this, 5L, 5L);
+                    }.runTaskTimer(this, 20L, 20L);
                 }
             }
 
