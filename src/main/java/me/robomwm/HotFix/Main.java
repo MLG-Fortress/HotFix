@@ -553,13 +553,13 @@ public class Main extends JavaPlugin implements Listener {
                                 cancel();
                                 return;
                             }
-                            Vector vector = finalPlayer.getLocation().toVector().subtract(firstLocation.toVector());
+                            Vector vector = finalPlayer.getLocation().add(0, 0.5, 0).toVector().subtract(firstLocation.toVector());
                             Iterator<Block> blocks = new BlockIterator(firstLocation.getWorld(), firstLocation.toVector(), vector, 0, (int)vector.length());
                             blocks.next();
                             while (blocks.hasNext())
                             {
                                 Block block = blocks.next();
-                                if (block != null)
+                                if (block.getType() != Material.AIR)
                                     finalPlayer.sendActionBar(block.toString());
                             }
                             firstLocation.getWorld().spawnArrow(firstLocation, vector, (float)vector.length(), 0);
