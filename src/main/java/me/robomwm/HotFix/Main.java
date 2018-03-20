@@ -553,8 +553,11 @@ public class Main extends JavaPlugin implements Listener {
                                 cancel();
                                 return;
                             }
-                            Vector vector = finalPlayer.getLocation().add(0, 0.5, 0).toVector().subtract(firstLocation.toVector());
+
+
+                            Vector vector = getClosestPlayer(firstLocation).getLocation().add(0, 1, 0).toVector().subtract(firstLocation.toVector());
                             Iterator<Block> blocks = new BlockIterator(firstLocation.getWorld(), firstLocation.toVector(), vector, 0, (int)vector.length());
+                            blocks.next();
                             blocks.next();
                             while (blocks.hasNext())
                             {
@@ -596,6 +599,18 @@ public class Main extends JavaPlugin implements Listener {
 //            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, jump, true, false));
 //        }
         return false;
+    }
+
+    private Player getClosestPlayer(Location location)
+    {
+        Player player = null;
+        double distance = Double.MAX_VALUE;
+        for (Player onlinePlayer : location.getWorld().getPlayers())
+        {
+            if (onlinePlayer.getLocation().distanceSquared(location) < distance)
+                player = onlinePlayer;
+        }
+        return player;
     }
 
     private TextComponent getClickableChat(String message, String command, String hover)
