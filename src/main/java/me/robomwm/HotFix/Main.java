@@ -555,8 +555,8 @@ public class Main extends JavaPlugin implements Listener {
                             }
 
 
-                            Vector vector = getClosestPlayer(firstLocation).getLocation().add(0, 1, 0).toVector().subtract(firstLocation.toVector());
-                            Iterator<Block> blocks = new BlockIterator(firstLocation.getWorld(), firstLocation.toVector(), vector, 0, Math.max(0, (int)vector.length()));
+                            Vector vector = getClosestPlayer(firstLocation).getLocation().add(0, 2, 0).toVector().subtract(firstLocation.toVector());
+                            Iterator<Block> blocks = new BlockIterator(firstLocation.getWorld(), firstLocation.toVector(), vector, 0, Math.min(100, (int)vector.length()));
                             blocks.next();
                             blocks.next();
                             while (blocks.hasNext())
