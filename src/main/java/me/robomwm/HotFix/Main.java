@@ -562,7 +562,7 @@ public class Main extends JavaPlugin implements Listener {
                                 if (block.getType() != Material.AIR)
                                     finalPlayer.sendActionBar(block.toString());
                             }
-                            firstLocation.getWorld().spawnArrow(firstLocation, vector, (float)vector.length(), 0);
+                            firstLocation.getWorld().spawnArrow(firstLocation, vector, 2, 0);
                         }
                     }.runTaskTimer(this, 20L, 20L);
                 }
