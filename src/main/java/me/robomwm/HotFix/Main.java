@@ -610,6 +610,8 @@ public class Main extends JavaPlugin implements Listener {
             return;
         for (RegisteredListener listener : event.getHandlers().getRegisteredListeners())
             Bukkit.broadcastMessage(listener.getListener().getClass().getCanonicalName());
+        Bukkit.broadcastMessage("Event is async: " + String.valueOf(event.isAsynchronous()));
+        Bukkit.broadcastMessage("On main thread: " + String.valueOf(Bukkit.isPrimaryThread()));
     }
 
     private Player getClosestPlayer(Location location)
