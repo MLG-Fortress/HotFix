@@ -609,7 +609,7 @@ public class Main extends JavaPlugin implements Listener {
         if (!herp)
             return;
         for (RegisteredListener listener : event.getHandlers().getRegisteredListeners())
-            Bukkit.broadcastMessage(listener.getPlugin().getName());
+            Bukkit.broadcastMessage(listener.getListener().getClass().getCanonicalName());
     }
 
     private Player getClosestPlayer(Location location)
