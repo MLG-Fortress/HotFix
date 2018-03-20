@@ -584,7 +584,12 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     private void hmm(PlayerChatEvent event)
     {
-        Bukkit.broadcastMessage("beep");
+        if (!herp)
+            return;
+        for (RegisteredListener listener : event.getHandlers().getRegisteredListeners())
+            Bukkit.broadcastMessage(listener.getListener().getClass().getCanonicalName());
+        Bukkit.broadcastMessage("Event is async: " + String.valueOf(event.isAsynchronous()));
+        Bukkit.broadcastMessage("On main thread: " + String.valueOf(Bukkit.isPrimaryThread()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
