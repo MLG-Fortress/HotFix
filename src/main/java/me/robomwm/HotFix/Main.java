@@ -562,7 +562,7 @@ public class Main extends JavaPlugin implements Listener {
                                 if (block != null)
                                     finalPlayer.sendActionBar(block.toString());
                             }
-                            firstLocation.getWorld().spawnEntity(firstLocation, EntityType.ARROW).setVelocity(vector);
+                            firstLocation.getWorld().spawnEntity(firstLocation, EntityType.ARROW).setVelocity(vector.normalize());
                         }
                     }.runTaskTimer(this, 20L, 20L);
                 }
