@@ -607,8 +607,12 @@ public class Main extends JavaPlugin implements Listener {
         double distance = Double.MAX_VALUE;
         for (Player onlinePlayer : location.getWorld().getPlayers())
         {
-            if (onlinePlayer.getLocation().distanceSquared(location) < distance)
+            double checkDistance = onlinePlayer.getLocation().distanceSquared(location);
+            if (checkDistance < distance)
+            {
                 player = onlinePlayer;
+                distance = checkDistance;
+            }
         }
         return player;
     }
