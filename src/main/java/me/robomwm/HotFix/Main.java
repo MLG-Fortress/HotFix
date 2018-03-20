@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.SoundCategory;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.command.Command;
@@ -48,6 +49,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
 import to.us.tf.absorptionshields.AbsorptionShields;
 import to.us.tf.absorptionshields.shield.ShieldUtils;
 
@@ -530,6 +533,36 @@ public class Main extends JavaPlugin implements Listener {
                     {
                         firstLocation = null;
                     }
+                }
+                else if (args[0].equalsIgnoreCase("sentry"))
+                {
+                    if (firstLocation != null)
+                    {
+                        firstLocation = null;
+                        return true;
+                    }
+                    firstLocation = player.getTargetBlock(null, 10).getLocation();
+                    Player finalPlayer = player;
+                    new BukkitRunnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            if (firstLocation == null)
+                            {
+                                cancel();
+                                return;
+                            }
+                            Vector vector = finalPlayer.getLocation().toVector().subtract(firstLocation.toVector());
+                            Iterator<Block> blocks = new BlockIterator(firstLocation.getWorld(), firstLocation.toVector(), vector, 0, (int)vector.length());
+                            while (blocks.hasNext())
+                            {
+                                if (blocks.next() != null)
+                                    return;
+                            }
+                            firstLocation.getWorld().spawnEntity(firstLocation, EntityType.ARROW).setVelocity(vector);
+                        }
+                    }.runTaskTimer(this, 5L, 5L);
                 }
             }
 
