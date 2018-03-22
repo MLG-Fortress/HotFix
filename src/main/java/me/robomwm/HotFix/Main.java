@@ -545,6 +545,11 @@ public class Main extends JavaPlugin implements Listener {
                         }
                     }.runTaskTimer(this, 20L, 20L);
                 }
+                else if (args[0].equalsIgnoreCase("glow"))
+                {
+                    player.sendMessage(String.valueOf(player.isGlowing()));
+                    player.setGlowing(!player.isGlowing());
+                }
             }
 
             return true;
