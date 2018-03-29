@@ -13,6 +13,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
@@ -549,6 +551,14 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     player.sendMessage(String.valueOf(player.isGlowing()));
                     player.setGlowing(!player.isGlowing());
+                }
+                else if (args[0].equalsIgnoreCase("damagemob"))
+                {
+                    for (Entity entity : player.getNearbyEntities(5,5,5))
+                    {
+                        if (entity.getType() != EntityType.PLAYER && entity instanceof Damageable)
+                            ((Damageable)entity).damage(Double.parseDouble(args[1]));
+                    }
                 }
             }
 
