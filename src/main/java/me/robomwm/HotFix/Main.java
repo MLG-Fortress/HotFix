@@ -16,6 +16,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
@@ -559,6 +560,54 @@ public class Main extends JavaPlugin implements Listener {
                         if (entity.getType() != EntityType.PLAYER && entity instanceof Damageable)
                             ((Damageable)entity).damage(Double.parseDouble(args[1]));
                     }
+                }
+                else if (args[0].equalsIgnoreCase("bounce"))
+                {
+                    Location location = player.getLocation().add(player.getLocation().getDirection());
+                    Item grenade = location.getWorld().dropItem(location, new ItemStack(Material.TNT));
+                    grenade.setCanMobPickup(false);
+                    grenade.setPickupDelay(Integer.MAX_VALUE);
+                    grenade.setVelocity(location.getDirection());
+
+                    new BukkitRunnable()
+                    {
+                        int duration = 60;
+
+                        @Override
+                        public void run()
+                        {
+                            if (--duration <= 0)
+                            {
+                                grenade.remove();
+                                grenade.getWorld().createExplosion(grenade.getLocation(), 1f, false, false);
+                                cancel();
+                            }
+                            Vector vector = grenade.getVelocity();
+                            int length = Math.max(2, (int)Math.round(vector.length()));
+                            BlockIterator blockIterator = new BlockIterator(grenade.getWorld(), vector, vector, 0, length);
+                            Block previousBlock = null;
+                            Block collidingBlock = null;
+                            while ((collidingBlock == null || collidingBlock.getType() != Material.AIR) && blockIterator.hasNext())
+                            {
+                                previousBlock = collidingBlock;
+                                collidingBlock = blockIterator.next();
+                            }
+
+                            if (collidingBlock == null || collidingBlock.getType() == Material.AIR)
+                                return;
+
+                            switch (collidingBlock.getFace(previousBlock))
+                            {
+                                case UP:
+                                case DOWN:
+                                    vector.setY(-vector.getY());
+                                    break;
+                                default:
+                                    vector.setX(-vector.getX());
+                            }
+                            grenade.setVelocity(vector);
+                        }
+                    }.runTaskTimer(this, 1L, 1L);
                 }
             }
 
