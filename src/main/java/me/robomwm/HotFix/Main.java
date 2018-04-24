@@ -568,6 +568,7 @@ public class Main extends JavaPlugin implements Listener {
                     grenade.setCanMobPickup(false);
                     grenade.setPickupDelay(Integer.MAX_VALUE);
                     grenade.setVelocity(location.getDirection());
+                    Player finalPlayer = player;
 
                     new BukkitRunnable()
                     {
@@ -602,9 +603,14 @@ public class Main extends JavaPlugin implements Listener {
                                 case DOWN:
                                     vector.setY(-vector.getY());
                                     break;
-                                default:
+                                case EAST:
+                                case WEST:
                                     vector.setX(-vector.getX());
+                                case NORTH:
+                                case SOUTH:
+                                    vector.setZ(-vector.getZ());
                             }
+                            finalPlayer.sendActionBar(collidingBlock.getFace(previousBlock).toString());
                             grenade.setVelocity(vector);
                         }
                     }.runTaskTimer(this, 1L, 1L);
