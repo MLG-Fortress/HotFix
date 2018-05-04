@@ -27,9 +27,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +40,7 @@ import to.us.tf.absorptionshields.shield.ShieldUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -191,6 +190,7 @@ public class Main extends JavaPlugin implements Listener {
             return;
         World world = event.getPlayer().getWorld();
         List<Location> locations = new ArrayList<>(lastLocations.get(event.getPlayer()));
+        Collections.reverse(locations);
         for (Location location : locations)
         {
             if (location.getWorld() != world)
@@ -213,30 +213,30 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(tnt.getSource().toString());
     }
 
-    @EventHandler
-    private void respawnEvent(PlayerRespawnEvent event)
-    {
-        if (!herp)
-            return;
-        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead() + " location:" + event.getPlayer().getLocation().toString());
-    }
-
-    @EventHandler
-    private void teleports(PlayerTeleportEvent event)
-    {
-        if (!herp)
-            return;
-        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead() + " cause:" + event.getCause().toString());
-
-    }
-
-    @EventHandler
-    private void changeWorld(PlayerChangedWorldEvent event)
-    {
-        if (!herp)
-            return;
-        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead());
-    }
+//    @EventHandler
+//    private void respawnEvent(PlayerRespawnEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead() + " location:" + event.getPlayer().getLocation().toString());
+//    }
+//
+//    @EventHandler
+//    private void teleports(PlayerTeleportEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead() + " cause:" + event.getCause().toString());
+//
+//    }
+//
+//    @EventHandler
+//    private void changeWorld(PlayerChangedWorldEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead());
+//    }
 
     @EventHandler
     private void death(PlayerDeathEvent event)
