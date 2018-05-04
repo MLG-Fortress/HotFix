@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.SoundCategory;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,11 +21,14 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,6 +42,7 @@ import to.us.tf.absorptionshields.shield.ShieldUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -164,6 +169,36 @@ public class Main extends JavaPlugin implements Listener {
 //        if (herp)
 //            event.setKeepInventory(true);
 //    }
+
+    HashMap<Player, List<Location>> lastLocations = new HashMap<>();
+    @EventHandler(ignoreCancelled = true)
+    private void trackMoveHistory(PlayerMoveEvent event)
+    {
+        if (!herp)
+            return;
+        if (!lastLocations.containsKey(event.getPlayer()))
+            lastLocations.put(event.getPlayer(), new ArrayList<>());
+        List<Location> locations = lastLocations.get(event.getPlayer());
+        if (locations.size() > 60)
+            locations.remove(0);
+        locations.add(event.getTo());
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    private void onSwapHandsButton(PlayerSwapHandItemsEvent event)
+    {
+        if (!herp)
+            return;
+        World world = event.getPlayer().getWorld();
+        List<Location> locations = new ArrayList<>(lastLocations.get(event.getPlayer()));
+        for (Location location : locations)
+        {
+            if (location.getWorld() != world)
+                return;
+            event.getPlayer().teleport(location);
+        }
+        event.setCancelled(true);
+    }
 
     @EventHandler
     void onExplode(EntityExplodeEvent event)
