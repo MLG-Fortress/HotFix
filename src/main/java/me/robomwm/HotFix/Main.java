@@ -197,7 +197,7 @@ public class Main extends JavaPlugin implements Listener {
             @Override
             public void run()
             {
-                if (locationIterator.hasNext())
+                if (!locationIterator.hasNext())
                 {
                     cancel();
                     return;
