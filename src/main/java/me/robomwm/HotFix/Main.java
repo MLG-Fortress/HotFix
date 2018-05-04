@@ -191,12 +191,23 @@ public class Main extends JavaPlugin implements Listener {
         World world = event.getPlayer().getWorld();
         List<Location> locations = new ArrayList<>(lastLocations.get(event.getPlayer()));
         Collections.reverse(locations);
-        for (Location location : locations)
+        new BukkitRunnable()
         {
-            if (location.getWorld() != world)
-                return;
-            event.getPlayer().teleport(location);
-        }
+            Iterator<Location> locationIterator = locations.iterator();
+            @Override
+            public void run()
+            {
+                if (locationIterator.hasNext())
+                {
+                    cancel();
+                    return;
+                }
+                Location location = locationIterator.next();
+                if (location.getWorld() != world)
+                    return;
+                event.getPlayer().teleport(location);
+            }
+        }.runTaskTimer(this, 1L, 1L);
         event.setCancelled(true);
     }
 
