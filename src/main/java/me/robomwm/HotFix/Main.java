@@ -33,10 +33,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
-import to.us.tf.absorptionshields.AbsorptionShields;
-import to.us.tf.absorptionshields.shield.ShieldUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -384,21 +383,24 @@ public class Main extends JavaPlugin implements Listener {
 
     private Location firstLocation;
 
+    private BukkitTask task;
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
         if (cmd.getName().equalsIgnoreCase("hotfix"))
         {
+            if (task != null)
+                task.cancel();
+            task = null;
             if (args.length < 1)
             {
                 herp = !herp;
                 sender.sendMessage(String.valueOf(herp));
             }
-            else if (args.length >= 1)
+            else if (args.length >= 1) //redundant
             {
-                Player player = null;
-                if (sender instanceof Player)
-                    player = (Player)sender;
+                Player player = (Player)sender;
 
                 if (args[0].equalsIgnoreCase("uuid"))
                 {
@@ -493,10 +495,10 @@ public class Main extends JavaPlugin implements Listener {
                     Player player1 = Bukkit.getPlayer(args[1]);
                     player.sendMessage(player1.getName() + String.valueOf(player1.hasPermission(args[2])));
                 }
-                else if (args[0].equalsIgnoreCase("shieldhealth"))
-                {
-                    toggleShieldDebug(player);
-                }
+//                else if (args[0].equalsIgnoreCase("shieldhealth"))
+//                {
+//                    toggleShieldDebug(player);
+//                }
                 else if (args[0].equalsIgnoreCase("damage"))
                 {
                     player.damage(Double.valueOf(args[1]));
@@ -661,6 +663,17 @@ public class Main extends JavaPlugin implements Listener {
                         }
                     }.runTaskTimer(this, 1L, 1L);
                 }
+                else if (args[0].equalsIgnoreCase("warpspeed"))
+                {
+                    task = new BukkitRunnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            player.setVelocity(player.getLocation().getDirection().multiply(4));
+                        }
+                    }.runTaskTimer(this, 1L, 1L);
+                }
             }
 
             return true;
@@ -740,17 +753,17 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     Player debugger = null;
-    ShieldUtils shieldUtils;
-
-    private void toggleShieldDebug(Player player)
-    {
-        if (debugger == null)
-            debugger = player;
-        else
-            debugger = null;
-        if (shieldUtils == null)
-            shieldUtils = ((AbsorptionShields)getServer().getPluginManager().getPlugin("AbsorptionShields")).getShieldUtils();
-    }
+//    ShieldUtils shieldUtils;
+//
+//    private void toggleShieldDebug(Player player)
+//    {
+//        if (debugger == null)
+//            debugger = player;
+//        else
+//            debugger = null;
+//        if (shieldUtils == null)
+//            shieldUtils = ((AbsorptionShields)getServer().getPluginManager().getPlugin("AbsorptionShields")).getShieldUtils();
+//    }
 
 //    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 //    private void onDamage(EntityDamageEvent event)
