@@ -672,8 +672,8 @@ public class Main extends JavaPlugin implements Listener {
                         @Override
                         public void run()
                         {
-                            player.setVelocity(player.getLocation().getDirection().multiply(16));
-                            player.spawnParticle(Particle.CLOUD, player.getLocation().add(player.getLocation().getDirection()), 500);
+                            //player.setVelocity(player.getLocation().getDirection().multiply(16));
+                            player.spawnParticle(Particle.CLOUD, player.getLocation().add(player.getLocation().getDirection()), 20);
                         }
                     }.runTaskTimer(this, 1L, 1L);
                 }
