@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Particle;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -28,6 +29,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.world.ChunkPopulateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -670,7 +672,8 @@ public class Main extends JavaPlugin implements Listener {
                         @Override
                         public void run()
                         {
-                            player.setVelocity(player.getLocation().getDirection().multiply(4));
+                            player.setVelocity(player.getLocation().getDirection().multiply(16));
+                            player.spawnParticle(Particle.CLOUD, player.getLocation().add(player.getLocation().getDirection()), 1);
                         }
                     }.runTaskTimer(this, 1L, 1L);
                 }
