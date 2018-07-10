@@ -673,7 +673,7 @@ public class Main extends JavaPlugin implements Listener {
                         public void run()
                         {
                             //player.setVelocity(player.getLocation().getDirection().multiply(16));
-                            player.spawnParticle(Particle.SPIT, player.getLocation().add(player.getLocation().getDirection().multiply(12)), 20);
+                            player.getWorld().spawnParticle(Particle.SPIT, player.getLocation().add(player.getLocation().getDirection().multiply(16)), 20);
                         }
                     }.runTaskTimer(this, 1L, 1L);
                 }
