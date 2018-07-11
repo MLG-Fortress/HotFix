@@ -34,6 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.BlockIterator;
@@ -669,10 +670,13 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     task = new BukkitRunnable()
                     {
+                        int speed = 1;
+                        
                         @Override
                         public void run()
                         {
                             //player.setVelocity(player.getLocation().getDirection().multiply(16));
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, speed++, true, false));
                             player.getWorld().spawnParticle(Particle.SPIT, player.getLocation().add(player.getLocation().getDirection().multiply(16)), 20);
                         }
                     }.runTaskTimer(this, 1L, 1L);
