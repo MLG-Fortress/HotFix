@@ -60,7 +60,7 @@ public class Main extends JavaPlugin implements Listener {
 
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getMessenger().registerOutgoingPluginChannel(this, "MC|BOpen");
+        //getServer().getMessenger().registerOutgoingPluginChannel(this, "MC|BOpen");
     }
 
 
@@ -671,7 +671,7 @@ public class Main extends JavaPlugin implements Listener {
                     task = new BukkitRunnable()
                     {
                         int speed = 1;
-                        
+
                         @Override
                         public void run()
                         {
