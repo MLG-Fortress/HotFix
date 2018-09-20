@@ -11,7 +11,6 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
 import org.bukkit.SoundCategory;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,16 +19,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.event.world.ChunkPopulateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,8 +36,6 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -171,60 +163,60 @@ public class Main extends JavaPlugin implements Listener {
 //            event.setKeepInventory(true);
 //    }
 
-    HashMap<Player, List<Location>> lastLocations = new HashMap<>();
-    @EventHandler(ignoreCancelled = true)
-    private void trackMoveHistory(PlayerMoveEvent event)
-    {
-        if (!herp)
-            return;
-        if (!lastLocations.containsKey(event.getPlayer()))
-            lastLocations.put(event.getPlayer(), new ArrayList<>());
-        List<Location> locations = lastLocations.get(event.getPlayer());
-        if (locations.size() > 60)
-            locations.remove(0);
-        locations.add(event.getTo());
-    }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-    private void onSwapHandsButton(PlayerSwapHandItemsEvent event)
-    {
-        if (!herp)
-            return;
-        World world = event.getPlayer().getWorld();
-        List<Location> locations = new ArrayList<>(lastLocations.get(event.getPlayer()));
-        Collections.reverse(locations);
-        new BukkitRunnable()
-        {
-            Iterator<Location> locationIterator = locations.iterator();
-            @Override
-            public void run()
-            {
-                if (!locationIterator.hasNext())
-                {
-                    cancel();
-                    return;
-                }
-                Location location = locationIterator.next();
-                if (location.getWorld() != world)
-                    return;
-                event.getPlayer().teleport(location);
-            }
-        }.runTaskTimer(this, 1L, 1L);
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    void onExplode(EntityExplodeEvent event)
-    {
-        if (!herp)
-            return;
-        if (event.getEntityType() != EntityType.PRIMED_TNT)
-            return;
-
-        TNTPrimed tnt = (TNTPrimed)event.getEntity();
-        System.out.println(tnt.hashCode());
-        Bukkit.broadcastMessage(tnt.getSource().toString());
-    }
+//    HashMap<Player, List<Location>> lastLocations = new HashMap<>();
+//    @EventHandler(ignoreCancelled = true)
+//    private void trackMoveHistory(PlayerMoveEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (!lastLocations.containsKey(event.getPlayer()))
+//            lastLocations.put(event.getPlayer(), new ArrayList<>());
+//        List<Location> locations = lastLocations.get(event.getPlayer());
+//        if (locations.size() > 60)
+//            locations.remove(0);
+//        locations.add(event.getTo());
+//    }
+//
+//    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+//    private void onSwapHandsButton(PlayerSwapHandItemsEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        World world = event.getPlayer().getWorld();
+//        List<Location> locations = new ArrayList<>(lastLocations.get(event.getPlayer()));
+//        Collections.reverse(locations);
+//        new BukkitRunnable()
+//        {
+//            Iterator<Location> locationIterator = locations.iterator();
+//            @Override
+//            public void run()
+//            {
+//                if (!locationIterator.hasNext())
+//                {
+//                    cancel();
+//                    return;
+//                }
+//                Location location = locationIterator.next();
+//                if (location.getWorld() != world)
+//                    return;
+//                event.getPlayer().teleport(location);
+//            }
+//        }.runTaskTimer(this, 1L, 1L);
+//        event.setCancelled(true);
+//    }
+//
+//    @EventHandler
+//    void onExplode(EntityExplodeEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (event.getEntityType() != EntityType.PRIMED_TNT)
+//            return;
+//
+//        TNTPrimed tnt = (TNTPrimed)event.getEntity();
+//        System.out.println(tnt.hashCode());
+//        Bukkit.broadcastMessage(tnt.getSource().toString());
+//    }
 
 //    @EventHandler
 //    private void respawnEvent(PlayerRespawnEvent event)
@@ -251,14 +243,14 @@ public class Main extends JavaPlugin implements Listener {
 //        Bukkit.broadcastMessage(event.getEventName() + event.getPlayer().getName() + " Dead:" + event.getPlayer().isDead());
 //    }
 
-    @EventHandler
-    private void death(PlayerDeathEvent event)
-    {
-        if (!herp)
-            return;
-        if (event.getEntity().getKiller() != null)
-            event.getEntity().sendMessage(event.getEntity().getKiller().getName());
-    }
+//    @EventHandler
+//    private void death(PlayerDeathEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (event.getEntity().getKiller() != null)
+//            event.getEntity().sendMessage(event.getEntity().getKiller().getName());
+//    }
 
 //    @EventHandler(priority = EventPriority.MONITOR)
 //    void onHurt(EntityDamageEvent event)
@@ -382,6 +374,14 @@ public class Main extends JavaPlugin implements Listener {
 //        }
 //        getShapedMatrix(ingredients, inventory.getMatrix());
 //    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onBlockBreak(BlockBreakEvent event)
+    {
+        if (!herp)
+            return;
+        event.setCancelled(true);
+    }
 
 
     private Location firstLocation;
