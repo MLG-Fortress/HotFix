@@ -4,6 +4,7 @@ version: ${project.version}
 author: RoboMWM
 main: me.robomwm.HotFix.Main
 softdepend: [AbsorptionShields]
+api-version: 1.13
 commands:
     hotfix:
       description: no
