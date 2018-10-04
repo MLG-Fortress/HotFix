@@ -9,9 +9,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Particle;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Damageable;
@@ -22,13 +22,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.BlockIterator;
@@ -376,10 +375,13 @@ public class Main extends JavaPlugin implements Listener {
 //    }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    private void onBlockBreak(BlockPlaceEvent event)
+    private void onBlockBreak(BlockBreakEvent event)
     {
         if (!herp)
             return;
+        if (event.getBlock().getType().equals(Material.SIGN))
+            for (String line : ((Sign)event.getBlock().getState()).getLines())
+                event.getPlayer().sendMessage(line.replaceAll(" ", "|"));
         event.setCancelled(true);
     }
 
@@ -403,7 +405,9 @@ public class Main extends JavaPlugin implements Listener {
             }
             else if (args.length >= 1) //redundant
             {
-                Player player = (Player)sender;
+                Player player = null;
+                if (sender instanceof Player)
+                    player = (Player)sender;
 
                 if (args[0].equalsIgnoreCase("uuid"))
                 {
@@ -676,10 +680,21 @@ public class Main extends JavaPlugin implements Listener {
                         public void run()
                         {
                             //player.setVelocity(player.getLocation().getDirection().multiply(16));
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, speed++, true, false));
-                            player.getWorld().spawnParticle(Particle.SPIT, player.getLocation().add(player.getLocation().getDirection().multiply(16)), 20);
+                            //player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, speed++, true, false));
+                            //player.getWorld().spawnParticle(Particle.SPIT, player.getLocation().add(player.getLocation().getDirection().multiply(16)), 20);
                         }
                     }.runTaskTimer(this, 1L, 1L);
+                }
+                else if (args[0].equalsIgnoreCase("version"))
+                {
+                    getServer().broadcastMessage(getServer().getVersion());
+                    getServer().broadcastMessage(getServer().getBukkitVersion());
+                    getServer().broadcastMessage(getServer().getServerName());
+                }
+                else if (args[0].equalsIgnoreCase("chat"))
+                {
+                    player.chat("" + args[1]);
+                    return true;
                 }
             }
 
