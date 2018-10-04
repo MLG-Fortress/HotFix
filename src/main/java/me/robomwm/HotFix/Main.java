@@ -379,7 +379,7 @@ public class Main extends JavaPlugin implements Listener {
     {
         if (!herp)
             return;
-        if (event.getBlock().getType().equals(Material.SIGN))
+        if (event.getBlock().getType().equals(Material.WALL_SIGN))
             for (String line : ((Sign)event.getBlock().getState()).getLines())
                 event.getPlayer().sendMessage(line.replaceAll(" ", "|"));
         event.setCancelled(true);
