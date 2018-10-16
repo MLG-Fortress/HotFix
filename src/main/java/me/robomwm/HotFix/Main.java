@@ -23,6 +23,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -383,6 +384,13 @@ public class Main extends JavaPlugin implements Listener {
             for (String line : ((Sign)event.getBlock().getState()).getLines())
                 event.getPlayer().sendMessage(line.replaceAll(" ", "|"));
         event.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onBlockBreak(BlockPlaceEvent event)
+    {
+        if (!herp)
+            return;
+        Bukkit.broadcastMessage(event.getBlock().getState().getClass().getSimpleName());
     }
 
 
