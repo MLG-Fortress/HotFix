@@ -405,6 +405,8 @@ public class Main extends JavaPlugin implements Listener {
             {
                 DoubleChest doubleChest = (DoubleChest)((Chest)event.getBlock().getState()).getInventory().getHolder();
 
+                Bukkit.broadcastMessage((doubleChest.getLeftSide().getInventory().getLocation().toString()));
+                Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getInventory().getLocation().toString());
                 Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getLocation().toString());
                 Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getBlock().getLocation().toString());
                 Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getBlockInventory().getLocation().toString());
