@@ -403,7 +403,7 @@ public class Main extends JavaPlugin implements Listener {
             {
                 BlockState state = event.getBlock().getRelative(BlockFace.SELF).getState();
                 for (BlockFace face : BlockFace.values())
-                    Bukkit.broadcastMessage(face.toString() + Boolean.toString(event.getBlock().getState() == event.getBlock().getRelative(face).getState()));
+                    Bukkit.broadcastMessage(face.toString() + Boolean.toString(state == event.getBlock().getRelative(face).getState()));
             }
         }.runTask(this);
     }
