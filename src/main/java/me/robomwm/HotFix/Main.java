@@ -403,13 +403,15 @@ public class Main extends JavaPlugin implements Listener {
             @Override
             public void run()
             {
+                Bukkit.broadcastMessage(((Chest)event.getBlock().getState()).getInventory().getHolder().getClass().getSimpleName());
+                Bukkit.broadcastMessage(Boolean.toString(((Chest)event.getBlock().getState()).getInventory().getHolder() instanceof DoubleChest));
                 //BlockState state = event.getBlock().getRelative(BlockFace.SELF).getState();
                 BlockState state = event.getBlock().getWorld().getBlockAt(event.getBlock().getLocation()).getState();
-                Bukkit.broadcastMessage(state.getClass().getSimpleName());
-                Bukkit.broadcastMessage(Boolean.toString(state instanceof DoubleChest));
+                Bukkit.broadcastMessage(((Chest)state).getInventory().getHolder().getClass().getSimpleName());
+                Bukkit.broadcastMessage(Boolean.toString(((Chest)state).getInventory().getHolder() instanceof DoubleChest));
                 state = event.getBlock().getRelative(BlockFace.SELF).getState();
-                Bukkit.broadcastMessage(state.getClass().getSimpleName());
-                Bukkit.broadcastMessage(Boolean.toString(state instanceof DoubleChest));
+                Bukkit.broadcastMessage(((Chest)state).getInventory().getHolder().getClass().getSimpleName());
+                Bukkit.broadcastMessage(Boolean.toString(((Chest)state).getInventory().getHolder() instanceof DoubleChest));
 //                for (BlockFace face : BlockFace.values())
 //                    Bukkit.broadcastMessage(face.toString() + Boolean.toString(state == event.getBlock().getRelative(face).getState()));
             }
