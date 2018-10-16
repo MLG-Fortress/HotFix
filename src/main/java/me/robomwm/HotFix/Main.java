@@ -13,6 +13,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -392,12 +393,13 @@ public class Main extends JavaPlugin implements Listener {
     {
         if (!herp)
             return;
-        Bukkit.broadcastMessage(event.getBlock().getState().getClass().getSimpleName());
-        Bukkit.broadcastMessage(Boolean.toString(event.getBlock().getState() instanceof DoubleChest));
+        Bukkit.broadcastMessage(((Chest)event.getBlock().getState()).getInventory().getHolder().getClass().getSimpleName());
+        Bukkit.broadcastMessage(Boolean.toString(((Chest)event.getBlock().getState()).getInventory().getHolder() instanceof DoubleChest));
 //        for (BlockFace face : BlockFace.values())
 //            Bukkit.broadcastMessage(face.toString() + Boolean.toString(event.getBlock().getState() == event.getBlock().getRelative(face).getState()));
         new BukkitRunnable()
         {
+            Location location = event.getBlock().getLocation();
             @Override
             public void run()
             {
