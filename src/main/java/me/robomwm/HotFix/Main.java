@@ -403,6 +403,13 @@ public class Main extends JavaPlugin implements Listener {
             @Override
             public void run()
             {
+                DoubleChest doubleChest = (DoubleChest)((Chest)event.getBlock().getState()).getInventory().getHolder();
+
+                Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getBlock().getLocation().toString());
+                Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getBlockInventory().getLocation().toString());
+
+
+
                 Bukkit.broadcastMessage(((Chest)event.getBlock().getState()).getInventory().getHolder().getClass().getSimpleName());
                 Bukkit.broadcastMessage(Boolean.toString(((Chest)event.getBlock().getState()).getInventory().getHolder() instanceof DoubleChest));
                 //BlockState state = event.getBlock().getRelative(BlockFace.SELF).getState();
