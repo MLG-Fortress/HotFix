@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -391,6 +392,7 @@ public class Main extends JavaPlugin implements Listener {
         if (!herp)
             return;
         Bukkit.broadcastMessage(event.getBlock().getState().getClass().getSimpleName());
+        Bukkit.broadcastMessage(Boolean.toString(event.getBlock().getState() instanceof DoubleChest));
     }
 
 
