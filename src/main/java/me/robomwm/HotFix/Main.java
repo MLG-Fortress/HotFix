@@ -12,6 +12,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -395,6 +396,16 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(Boolean.toString(event.getBlock().getState() instanceof DoubleChest));
         for (BlockFace face : BlockFace.values())
             Bukkit.broadcastMessage(face.toString() + Boolean.toString(event.getBlock().getState() == event.getBlock().getRelative(face).getState()));
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                BlockState state = event.getBlock().getRelative(BlockFace.SELF).getState();
+                for (BlockFace face : BlockFace.values())
+                    Bukkit.broadcastMessage(face.toString() + Boolean.toString(event.getBlock().getState() == event.getBlock().getRelative(face).getState()));
+            }
+        }.runTask(this);
     }
 
 
