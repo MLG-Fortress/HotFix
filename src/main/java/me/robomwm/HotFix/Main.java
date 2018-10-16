@@ -394,8 +394,8 @@ public class Main extends JavaPlugin implements Listener {
             return;
         Bukkit.broadcastMessage(event.getBlock().getState().getClass().getSimpleName());
         Bukkit.broadcastMessage(Boolean.toString(event.getBlock().getState() instanceof DoubleChest));
-        for (BlockFace face : BlockFace.values())
-            Bukkit.broadcastMessage(face.toString() + Boolean.toString(event.getBlock().getState() == event.getBlock().getRelative(face).getState()));
+//        for (BlockFace face : BlockFace.values())
+//            Bukkit.broadcastMessage(face.toString() + Boolean.toString(event.getBlock().getState() == event.getBlock().getRelative(face).getState()));
         new BukkitRunnable()
         {
             @Override
@@ -411,7 +411,7 @@ public class Main extends JavaPlugin implements Listener {
 //                for (BlockFace face : BlockFace.values())
 //                    Bukkit.broadcastMessage(face.toString() + Boolean.toString(state == event.getBlock().getRelative(face).getState()));
             }
-        }.runTask(this);
+        }.runTaskLater(this, 2L);
     }
 
 
