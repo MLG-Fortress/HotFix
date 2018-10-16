@@ -11,8 +11,8 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.DoubleChest;
-import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Damageable;
@@ -23,7 +23,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.inventory.ItemStack;
@@ -376,16 +375,17 @@ public class Main extends JavaPlugin implements Listener {
 //        getShapedMatrix(ingredients, inventory.getMatrix());
 //    }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    private void onBlockBreak(BlockBreakEvent event)
-    {
-        if (!herp)
-            return;
-        if (event.getBlock().getType().equals(Material.WALL_SIGN))
-            for (String line : ((Sign)event.getBlock().getState()).getLines())
-                event.getPlayer().sendMessage(line.replaceAll(" ", "|"));
-        event.setCancelled(true);
-    }
+//    @EventHandler(priority = EventPriority.LOWEST)
+//    private void onBlockBreak(BlockBreakEvent event)
+//    {
+//        if (!herp)
+//            return;
+//        if (event.getBlock().getType().equals(Material.WALL_SIGN))
+//            for (String line : ((Sign)event.getBlock().getState()).getLines())
+//                event.getPlayer().sendMessage(line.replaceAll(" ", "|"));
+//        event.setCancelled(true);
+//    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     private void onBlockBreak(BlockPlaceEvent event)
     {
@@ -393,6 +393,8 @@ public class Main extends JavaPlugin implements Listener {
             return;
         Bukkit.broadcastMessage(event.getBlock().getState().getClass().getSimpleName());
         Bukkit.broadcastMessage(Boolean.toString(event.getBlock().getState() instanceof DoubleChest));
+        for (BlockFace face : BlockFace.values())
+            Bukkit.broadcastMessage(face.toString() + Boolean.toString(event.getBlock().getState() == event.getBlock().getRelative(face).getState()));
     }
 
 
