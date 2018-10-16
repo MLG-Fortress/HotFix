@@ -401,7 +401,8 @@ public class Main extends JavaPlugin implements Listener {
             @Override
             public void run()
             {
-                BlockState state = event.getBlock().getRelative(BlockFace.SELF).getState();
+                //BlockState state = event.getBlock().getRelative(BlockFace.SELF).getState();
+                BlockState state = event.getBlock().getWorld().getBlockAt(event.getBlock().getLocation()).getState();
                 for (BlockFace face : BlockFace.values())
                     Bukkit.broadcastMessage(face.toString() + Boolean.toString(state == event.getBlock().getRelative(face).getState()));
             }
