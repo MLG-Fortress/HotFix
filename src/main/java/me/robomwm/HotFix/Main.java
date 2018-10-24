@@ -748,6 +748,7 @@ public class Main extends JavaPlugin implements Listener {
                     Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', String.join(" ", args) + ";"));
                     Bukkit.broadcastMessage(StringUtils.join(args, " ").replaceAll("&", "\u00A7") + ";");
                     Bukkit.broadcastMessage(String.join(" ", args).replaceAll("&", "\u00A7") + ";");
+                    Bukkit.broadcastMessage(String.valueOf(String.join(" ", args).replaceAll("&", "\u00A7").length()));
                 }
             }
 
