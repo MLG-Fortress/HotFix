@@ -749,6 +749,8 @@ public class Main extends JavaPlugin implements Listener {
                     System.out.println(StringUtils.join(args, " ").replaceAll("&", "\u00A7") + ";");
                     System.out.println(String.join(" ", args).replaceAll("&", "\u00A7") + ";");
                     Bukkit.broadcastMessage(String.valueOf(String.join(" ", args).replaceAll("&", "\u00A7").length()));
+                    Bukkit.broadcastMessage(String.valueOf(args.length));
+                    Bukkit.broadcastMessage(String.valueOf(String.join(" ", args).replaceAll("&", "\u00A7").split(" ").length));
                     getConfig().set("yolo", String.join(" ", args).replaceAll("&", "\u00A7"));
                     saveConfig();
                 }
