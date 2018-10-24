@@ -4,6 +4,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -738,6 +739,15 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     player.chat("" + args[1]);
                     return true;
+                }
+                else if (args[0].equalsIgnoreCase("color"))
+                {
+                    Bukkit.broadcastMessage(StringUtils.join(args, " ") + ";");
+                    Bukkit.broadcastMessage(String.join(" ", args) + ";");
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', StringUtils.join(args, " ") + ";"));
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', String.join(" ", args) + ";"));
+                    Bukkit.broadcastMessage(StringUtils.join(args, " ").replaceAll("&", "\u00A7") + ";");
+                    Bukkit.broadcastMessage(String.join(" ", args).replaceAll("&", "\u00A7") + ";");
                 }
             }
 
