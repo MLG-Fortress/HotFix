@@ -745,10 +745,12 @@ public class Main extends JavaPlugin implements Listener {
                     Bukkit.broadcastMessage(StringUtils.join(args, " ") + ";");
                     Bukkit.broadcastMessage(String.join(" ", args) + ";");
                     Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', StringUtils.join(args, " ") + ";"));
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', String.join(" ", args) + ";"));
-                    Bukkit.broadcastMessage(StringUtils.join(args, " ").replaceAll("&", "\u00A7") + ";");
-                    Bukkit.broadcastMessage(String.join(" ", args).replaceAll("&", "\u00A7") + ";");
+                    System.out.println(ChatColor.translateAlternateColorCodes('&', String.join(" ", args) + ";"));
+                    System.out.println(StringUtils.join(args, " ").replaceAll("&", "\u00A7") + ";");
+                    System.out.println(String.join(" ", args).replaceAll("&", "\u00A7") + ";");
                     Bukkit.broadcastMessage(String.valueOf(String.join(" ", args).replaceAll("&", "\u00A7").length()));
+                    getConfig().set("yolo", String.join(" ", args).replaceAll("&", "\u00A7"));
+                    saveConfig();
                 }
             }
 
