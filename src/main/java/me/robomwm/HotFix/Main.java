@@ -752,6 +752,9 @@ public class Main extends JavaPlugin implements Listener {
                     Bukkit.broadcastMessage(String.valueOf(args.length));
                     Bukkit.broadcastMessage(String.valueOf(String.join(" ", args).replaceAll("&", "\u00A7").split(" ").length));
                     getConfig().set("yolo", String.join(" ", args).replaceAll("&", "\u00A7"));
+                    String newArgs[] = String.join(" ", args).replaceAll("&", "\u00A7").split(" ");
+                    for (int i = 0; i < newArgs.length; i++)
+                        getConfig().set(String.valueOf(i), newArgs[i]);
                     saveConfig();
                 }
             }
