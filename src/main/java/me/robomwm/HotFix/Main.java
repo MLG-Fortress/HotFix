@@ -342,7 +342,7 @@ public class Main extends JavaPlugin implements Listener {
         for (int i = 0; i < newArgs.length; i++)
             getConfig().set(String.valueOf(i), newArgs[i]);
         saveConfig();
-
+        Bukkit.broadcastMessage(name);
     }
 
 //    @EventHandler
