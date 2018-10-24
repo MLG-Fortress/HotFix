@@ -26,8 +26,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -322,41 +324,26 @@ public class Main extends JavaPlugin implements Listener {
 //        ((LivingEntity)event.getEntity()).setNoDamageTicks(nodamage);
 //    }
 
-//    @EventHandler
-//    private void chestNamer(PlayerInteractEvent event)
-//    {
-//        if (!herp)
-//            return;
-//        if (!event.getPlayer().isOp())
-//            return;
-//        if (event.getAction() != Action.LEFT_CLICK_BLOCK)
-//            return;
-//        Chest chest = (Chest)event.getClickedBlock().getState();
-//        Bukkit.broadcastMessage(chest.getClass().getSimpleName());
-//
-//        DoubleChest doubleChest = (DoubleChest)(chest.getInventory().getHolder());
-//        chest.getInventory().addItem(event.getItem());
-//        //chest.update();
-//
-//        Bukkit.broadcastMessage(((Chest)doubleChest.getLeftSide()).getCustomName());
-//        try
-//        {
-//            Bukkit.broadcastMessage(((Chest)doubleChest.getRightSide()).getLocation().toString());
-//            Bukkit.broadcastMessage(doubleChest.getLocation().toString());
-////            Chest leftChest = (Chest)((Chest)doubleChest.getLeftSide()).getBlock().getState();
-////            leftChest.setCustomName("test");
-////            Chest rightChest = (Chest)((Chest)doubleChest.getRightSide()).getBlock().getState();
-////            rightChest.setCustomName("ing");
-////            Bukkit.broadcastMessage( String.valueOf(leftChest.update()));
-////            Bukkit.broadcastMessage( String.valueOf(rightChest.update()));
-//        }
-//        catch (Throwable rock)
-//        {
-//            rock.printStackTrace();
-//            Bukkit.broadcastMessage(doubleChest.getLeftSide().getClass().getSimpleName());
-//        }
-//
-//    }
+    @EventHandler
+    private void chestNamer(PlayerInteractEvent event)
+    {
+        if (!herp)
+            return;
+        if (!event.getPlayer().isOp())
+            return;
+        if (event.getAction() != Action.LEFT_CLICK_BLOCK)
+            return;
+        Chest chest = (Chest)event.getClickedBlock().getState();
+        String name = chest.getCustomName();
+        getConfig().set("yolos", name);
+        String[] args = name.split(" ");
+        getConfig().set("yolo", String.join(" ", args).replaceAll("&", "\u00A7"));
+        String newArgs[] = String.join(" ", args).replaceAll("&", "\u00A7").split(" ");
+        for (int i = 0; i < newArgs.length; i++)
+            getConfig().set(String.valueOf(i), newArgs[i]);
+        saveConfig();
+
+    }
 
 //    @EventHandler
 //    private void testCraft(InventoryCloseEvent event)
