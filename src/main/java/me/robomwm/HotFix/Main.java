@@ -333,6 +333,10 @@ public class Main extends JavaPlugin implements Listener {
             return;
         if (event.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
+
+        Bukkit.broadcastMessage(event.getClickedBlock().getBlockData().getAsString());
+
+        if (true) return;
         Chest chest = (Chest)event.getClickedBlock().getState();
         String name = chest.getCustomName();
         getConfig().set("yolos", name);
