@@ -748,6 +748,16 @@ public class Main extends JavaPlugin implements Listener {
                         getConfig().set(String.valueOf(i), newArgs[i]);
                     saveConfig();
                 }
+                else if (args[0].equalsIgnoreCase("gencheck"))
+                {
+                    player.sendMessage(getDefaultWorldGenerator(null, null).getClass().getName());
+                    if (args.length > 1)
+                    {
+                        player.sendMessage(getDefaultWorldGenerator(args[1], null).getClass().getName());
+                        player.sendMessage(getDefaultWorldGenerator(args[1], args[2]).getClass().getName());
+                        player.sendMessage(getServer().getWorld(args[1]).getGenerator().getClass().getName());
+                    }
+                }
             }
 
             return true;
