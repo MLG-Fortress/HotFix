@@ -750,6 +750,10 @@ public class Main extends JavaPlugin implements Listener {
                 }
                 else if (args[0].equalsIgnoreCase("gencheck"))
                 {
+                    player.sendMessage("checking generator for " + args[1]);
+                    player.sendMessage(String.valueOf(getServer().getWorld(args[1])));
+                    player.sendMessage(String.valueOf(getServer().getWorld(args[1]).getGenerator()));
+                    player.sendMessage(String.valueOf(getServer().getWorld(args[1]).getGenerator().getClass()));
                     player.sendMessage(getServer().getWorld(args[1]).getGenerator().getClass().getName());
                 }
             }
