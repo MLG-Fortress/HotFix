@@ -369,6 +369,9 @@ public class Main extends JavaPlugin implements Listener {
             maxDistance = distance;
 
         player.sendMessage(Double.toString(distance));
+        Location anotherFrom = event.getFrom().clone();
+        anotherFrom.setY(-1);
+        player.sendMessage(anotherFrom.getBlock().getType().name());
     }
 
 //    @EventHandler
