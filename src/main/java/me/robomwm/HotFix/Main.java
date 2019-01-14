@@ -370,7 +370,7 @@ public class Main extends JavaPlugin implements Listener {
 
         player.sendMessage(Double.toString(distance));
         Location anotherFrom = event.getFrom().clone();
-        anotherFrom.setY(-1);
+        anotherFrom.add(0,-1,0);
         player.sendMessage(anotherFrom.getBlock().getType().name());
     }
 
