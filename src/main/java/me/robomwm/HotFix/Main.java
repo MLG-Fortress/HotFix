@@ -364,7 +364,11 @@ public class Main extends JavaPlugin implements Listener {
         Location from = event.getFrom().clone();
         from.setY(event.getTo().getY());
 
-        player.sendMessage(Double.toString(from.distanceSquared(event.getTo())));
+        double distance = from.distanceSquared(event.getTo());
+        if (distance > maxDistance)
+            maxDistance = distance;
+
+        player.sendMessage(Double.toString(distance));
     }
 
 //    @EventHandler
