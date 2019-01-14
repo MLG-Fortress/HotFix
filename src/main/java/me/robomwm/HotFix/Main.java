@@ -30,6 +30,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -349,6 +350,26 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(name);
     }
 
+    private double maxDistance = 0;
+
+    @EventHandler
+    private void onPlayerMove(PlayerMoveEvent event)
+    {
+        if (!herp)
+            return;
+        Player player = event.getPlayer();
+
+        if (!player.isOp())
+            return;
+
+        player.sendActionBar(Double.toString(maxDistance));
+
+        Location from = event.getFrom().clone();
+        from.setY(event.getTo().getY());
+        
+        player.sendMessage(Double.toString(from.distanceSquared(event.getTo())));
+    }
+
 //    @EventHandler
 //    private void testCraft(InventoryCloseEvent event)
 //    {
@@ -437,6 +458,7 @@ public class Main extends JavaPlugin implements Listener {
             {
                 herp = !herp;
                 sender.sendMessage(String.valueOf(herp));
+                maxDistance = 0;
             }
             else if (args.length >= 1) //redundant
             {
