@@ -42,10 +42,8 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -54,7 +52,6 @@ import java.util.UUID;
 public class Main extends JavaPlugin implements Listener {
     boolean herp = false;
     boolean schedule = false;
-    Set<Player> cancelVelocity = new HashSet<Player>();
 
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
@@ -366,7 +363,7 @@ public class Main extends JavaPlugin implements Listener {
 
         Location from = event.getFrom().clone();
         from.setY(event.getTo().getY());
-        
+
         player.sendMessage(Double.toString(from.distanceSquared(event.getTo())));
     }
 
