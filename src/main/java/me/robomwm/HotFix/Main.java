@@ -348,31 +348,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     private double maxDistance = 0;
-
-//    @EventHandler
-//    private void onPlayerMove(PlayerMoveEvent event)
-//    {
-//        if (!herp)
-//            return;
-//        Player player = event.getPlayer();
-//
-//        if (!player.isOp())
-//            return;
-//
-//        player.sendActionBar(Double.toString(maxDistance));
-//
-//        Location from = event.getFrom().clone();
-//        from.setY(event.getTo().getY());
-//
-//        double distance = from.distanceSquared(event.getTo());
-//        if (distance > maxDistance)
-//            maxDistance = distance;
-//
-//        player.sendMessage(Double.toString(distance));
-//        Location anotherFrom = event.getFrom().clone();
-//        anotherFrom.add(0,-1,0);
-//        player.sendMessage(anotherFrom.getBlock().getType().name());
-//    }
+    private double maxYDistance = 0;
 
     @EventHandler
     private void onPlayerMove(PlayerMoveEvent event)
@@ -384,13 +360,19 @@ public class Main extends JavaPlugin implements Listener {
         if (!player.isOp())
             return;
 
-        player.sendActionBar(Double.toString(maxDistance));
+        player.sendActionBar(maxDistance + " y:" + maxYDistance);
 
-        double distance = event.getTo().getY() - event.getFrom().getY();
+        Location from = event.getFrom().clone();
+        from.setY(event.getTo().getY());
+
+        double distance = from.distanceSquared(event.getTo());
         if (distance > maxDistance)
             maxDistance = distance;
+        double yDistance = event.getTo().getY() - event.getFrom().getY();
+        if (yDistance > maxYDistance)
+            maxYDistance = yDistance;
 
-        player.sendMessage(Double.toString(distance));
+        player.sendMessage(distance + " y:" + yDistance);
         Location anotherFrom = event.getFrom().clone();
         anotherFrom.add(0,-1,0);
         player.sendMessage(anotherFrom.getBlock().getType().name());
