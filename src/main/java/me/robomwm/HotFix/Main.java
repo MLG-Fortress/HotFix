@@ -31,6 +31,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -410,6 +411,16 @@ public class Main extends JavaPlugin implements Listener {
 //    }
 
     @EventHandler(priority = EventPriority.LOWEST)
+    private void onSave(WorldSaveEvent event)
+    {
+        if (!herp)
+            return;
+        getLogger().info("save called for " + event.getWorld());
+        for (StackTraceElement element : Thread.currentThread().getStackTrace())
+            getLogger().info(element.toString());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
     private void onBlockBreak(BlockPlaceEvent event)
     {
         if (!herp)
@@ -754,7 +765,7 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     getServer().broadcastMessage(getServer().getVersion());
                     getServer().broadcastMessage(getServer().getBukkitVersion());
-                    getServer().broadcastMessage(getServer().getServerName());
+                    getServer().broadcastMessage(getServer().getName());
                 }
                 else if (args[0].equalsIgnoreCase("chat"))
                 {
