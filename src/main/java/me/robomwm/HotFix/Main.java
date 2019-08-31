@@ -28,6 +28,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -322,6 +323,20 @@ public class Main extends JavaPlugin implements Listener {
 //            return;
 //        ((LivingEntity)event.getEntity()).setNoDamageTicks(nodamage);
 //    }
+
+    @EventHandler
+    private void chorusFlower(ProjectileHitEvent event)
+    {
+        if (!herp)
+            return;
+        if (event.getHitBlock() != null && event.getHitBlock().getType() == Material.CHORUS_FLOWER)
+        {
+            event.getEntity().remove();
+            event.getHitBlock().setType(Material.AIR);
+
+            Bukkit.getScheduler().runTask(this, () -> event.getHitBlock().setType(Material.CHORUS_FLOWER));
+        }
+    }
 
     @EventHandler
     private void chestNamer(PlayerInteractEvent event)
