@@ -331,11 +331,9 @@ public class Main extends JavaPlugin implements Listener {
             return;
         if (event.getHitBlock() != null && event.getHitBlock().getType() == Material.CHORUS_FLOWER)
         {
-            event.getEntity().setBounce(true);
             event.getHitBlock().setType(Material.AIR);
             Bukkit.broadcastMessage("chorus");
-
-
+            
             Bukkit.getScheduler().runTask(this, () -> event.getHitBlock().setType(Material.CHORUS_FLOWER));
         }
     }
