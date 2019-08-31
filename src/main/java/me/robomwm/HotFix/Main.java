@@ -331,8 +331,10 @@ public class Main extends JavaPlugin implements Listener {
             return;
         if (event.getHitBlock() != null && event.getHitBlock().getType() == Material.CHORUS_FLOWER)
         {
-            event.getEntity().remove();
+            //event.getEntity().remove();
             event.getHitBlock().setType(Material.AIR);
+            Bukkit.broadcastMessage("chorus");
+
 
             Bukkit.getScheduler().runTask(this, () -> event.getHitBlock().setType(Material.CHORUS_FLOWER));
         }
@@ -366,7 +368,7 @@ public class Main extends JavaPlugin implements Listener {
     private double maxDistance = 0;
     private double maxYDistance = 0;
 
-    @EventHandler
+    //@EventHandler
     private void onPlayerMove(PlayerMoveEvent event)
     {
         if (!herp)
