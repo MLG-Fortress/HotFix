@@ -35,6 +35,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -333,7 +334,7 @@ public class Main extends JavaPlugin implements Listener {
         {
             event.getHitBlock().setType(Material.AIR);
             Bukkit.broadcastMessage("chorus");
-            
+
             Bukkit.getScheduler().runTask(this, () -> event.getHitBlock().setType(Material.CHORUS_FLOWER));
         }
     }
@@ -811,6 +812,10 @@ public class Main extends JavaPlugin implements Listener {
                     player.sendMessage(String.valueOf(getServer().getWorld(args[1]).getGenerator()));
                     player.sendMessage(String.valueOf(getServer().getWorld(args[1]).getGenerator().getClass()));
                     player.sendMessage(getServer().getWorld(args[1]).getGenerator().getClass().getName());
+                }
+                else if (args[0].equalsIgnoreCase("skullcheck"))
+                {
+                    sender.sendMessage(((SkullMeta)player.getInventory().getItemInMainHand().getItemMeta()).getOwningPlayer().getName());
                 }
             }
 
