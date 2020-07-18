@@ -817,6 +817,11 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     sender.sendMessage(((SkullMeta)player.getInventory().getItemInMainHand().getItemMeta()).getOwningPlayer().getName());
                 }
+                else if (args[0].equalsIgnoreCase("explode"))
+                {
+                    sender.sendMessage("power, fire, break");
+                    player.getLocation().getWorld().createExplosion(player.getLocation(), Float.parseFloat(args[1]), args[2].equalsIgnoreCase("fire"), args[3].equalsIgnoreCase("break"));
+                }
             }
 
             return true;
