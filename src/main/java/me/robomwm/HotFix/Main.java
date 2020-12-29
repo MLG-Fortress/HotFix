@@ -23,6 +23,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Wither;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -821,6 +822,14 @@ public class Main extends JavaPlugin implements Listener {
                 {
                     sender.sendMessage("power, fire, break");
                     player.getLocation().getWorld().createExplosion(player.getLocation(), Float.parseFloat(args[1]), args[2].equalsIgnoreCase("fire"), args[3].equalsIgnoreCase("break"));
+                }
+                else if (args[0].equalsIgnoreCase("withercheck"))
+                {
+                    for (Entity entity : player.getWorld().getEntities())
+                    {
+                        if (entity instanceof Wither)
+                            sender.sendMessage("getRemoveWhenFarAway(): " + ((Wither) entity).getRemoveWhenFarAway());
+                    }
                 }
             }
 
