@@ -31,6 +31,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.WorldSaveEvent;
@@ -435,6 +436,14 @@ public class Main extends JavaPlugin implements Listener {
         getLogger().info("save called for " + event.getWorld());
         for (StackTraceElement element : Thread.currentThread().getStackTrace())
             getLogger().info(element.toString());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onEggThrow(PlayerEggThrowEvent event)
+    {
+        if (!herp)
+            return;
+        Bukkit.broadcastMessage("eggHatch location: " + event.getEgg().getLocation());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
