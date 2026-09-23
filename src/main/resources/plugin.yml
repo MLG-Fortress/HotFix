@@ -11,18 +11,10 @@ commands:
       usage: /hotfix <target> <name>
       permission: hotfix.no
       permission-message: Ayyy leMayo
-    waxsigns:
-      description: Wax all signs in specified world or current world
-      usage: /waxsigns [world]
-      permission: hotfix.waxsigns
-      permission-message: Ayyy leMayo
     goldleggings:
       usage: /goldleggings <levitation amplifier> <jump amplifier>
     
 permissions:
     hotfix.no:
         description: Permission to /hotfix
-        default: op
-    hotfix.waxsigns:
-        description: Permission to wax all signs
         default: op
